@@ -1,0 +1,209 @@
+# erzeugt Samstag, 04. Juli 2015 14:04 (C) 2015 von Leander Jedamus
+# modifiziert Mittwoch, 15. November 2023 16:33 von Leander Jedamus
+# modifiziert Mittwoch, 16. August 2023 14:31 von Leander Jedamus
+# modifiziert Dienstag, 15. August 2023 07:53 von Leander Jedamus
+# modifiziert Freitag, 11. August 2023 05:16 von Leander Jedamus
+# modifiziert Mittwoch, 09. August 2023 15:11 von Leander Jedamus
+# modifiziert Dienstag, 08. August 2023 08:29 von Leander Jedamus
+# modifiziert Sonntag, 30. Juli 2023 18:43 von Leander Jedamus
+# modifiziert Donnerstag, 27. Juli 2023 16:15 von Leander Jedamus
+# modifiziert Mittwoch, 19. Juli 2023 17:34 von Leander Jedamus
+# modifiziert Montag, 17. Juli 2023 23:52 von Leander Jedamus
+
+ifeq ($(machtype),MacOS)
+  CC		:= clang
+  CXX		:= clang++
+else
+  CC		:= gcc
+  CXX		:= g++
+endif
+
+AR		:= ar
+RANLIB		:= ranlib
+LD		:= ld
+AS		:= as
+
+COPTS		= $(DFLAGS) $(CPPFLAGS) $(IFLAGS) $(TARGET_ARCH)
+COPTS		+= #-Wall
+LOPTS		= $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
+C.c		= $(CC) $(strip $(CFLAGS) $(COPTS))
+C.cc		= $(CXX) $(strip $(CXXFLAGS) $(COPTS))
+COMPILE.c	= $(C.c) -c
+COMPILE.cc	= $(C.cc) -c
+LINK.c		= $(CC) $(strip $(CFLAGS) $(LOPTS))
+LINK.cc		= $(CXX) $(strip $(CXXFLAGS) $(LOPTS))
+DEPEND.c	= $(C.c) -MM
+DEPEND.cc	= $(C.cc) -MM
+
+define compile.c
+$(RM) $@
+$(strip $(COMPILE.c) $< $(OUTPUT_OPTION))
+endef
+
+define compile.cc
+$(RM) $@
+$(strip $(COMPILE.cc) $< $(OUTPUT_OPTION))
+endef
+
+define link.c
+$(RM) $@
+$(strip $(LINK.c) $(filter %.o,$^) $(LOADLIBES) -o $@ $(LDLIBS))
+endef
+
+define link.cc
+$(RM) $@
+$(strip $(LINK.cc) $(filter %.o,$^) $(LOADLIBES) -o $@ $(LDLIBS))
+endef
+
+define archive
+$(RM) $@
+$(AR) $(ARFLAGS) $@ $^
+$(RANLIB) $@
+endef
+
+define dynamic_link.c
+$(RM) $@
+$(strip $(COMPILE.c) -fPIC $< $(OUTPUT_OPTION))
+endef
+
+define dynamic_link.cc
+$(RM) $@
+$(strip $(COMPILE.cc) -fPIC $< $(OUTPUT_OPTION))
+endef
+
+ifeq ($(machtype),MacOS)
+  define dynamic_link.o
+    $(RM) $@
+    $(CC) -dynamiclib -install_name @rpath/$@ -o $@ $^
+  endef
+  define dynamic_link.o++
+    $(RM) $@
+    $(CXX) -dynamiclib -install_name @rpath/$@ -o $@ $^
+  endef
+else
+  define dynamic_link.o
+    $(RM) $@
+    $(CC) -shared -o $@ $^
+  endef
+  define dynamic_link.o++
+    $(RM) $@
+    $(CXX) -shared -o $@ $^
+  endef
+endif
+
+define depend.c.oo
+  $(DEPEND.c) $< | sed -e 's/\.o:/.oo $@: Makefile Makefile.c_and_c++/' > $@
+endef
+
+define depend.cc.oo
+  $(DEPEND.c) $< | sed -e 's/\.o:/.oo $@: Makefile Makefile.c_and_c++/' > $@
+endef
+
+define depend.c.o++
+  $(DEPEND.c) $< | sed -e 's/\.o:/.o++ $@: Makefile Makefile.c_and_c++/' > $@
+endef
+
+define depend.cc.o++
+  $(DEPEND.c) $< | sed -e 's/\.o:/.o++ $@: Makefile Makefile.c_and_c++/' > $@
+endef
+
+define depend.c.o
+  $(DEPEND.c) $< | sed -e 's/\.o:/.o $@: Makefile Makefile.c_and_c++/' > $@
+endef
+
+define depend.cc.o
+  $(DEPEND.cc) $< | sed -e 's/\.o:/.o $@: Makefile Makefile.c_and_c++/' > $@
+endef
+
+%.o:		%.c
+		$(compile.c)
+
+%.d:		%.c
+ifeq ($(link_switch),static)
+		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.c.oo)" "$(depend.c.o)"
+else
+		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.c.o++)" "$(depend.c.o)"
+endif
+
+%.o:		%.c++
+		$(compile.cc)
+
+%.o:		%.cpp
+		$(compile.cc)
+
+%.o:		%.cxx
+		$(compile.cc)
+
+%.o:		%.cc
+		$(compile.cc)
+
+%.o:		%.C
+		$(compile.cc)
+
+%.d:		%.c++
+ifeq ($(link_switch),static)
+		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.oo)" "$(depend.cc.o)"
+else
+		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.o++)" "$(depend.cc.o)"
+endif
+
+%.d:		%.cpp
+ifeq ($(link_switch),static)
+		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.oo)" "$(depend.cc.o)"
+else
+		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.o++)" "$(depend.cc.o)"
+endif
+
+%.d:		%.cxx
+ifeq ($(link_switch),static)
+		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.oo)" "$(depend.cc.o)"
+else
+		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.o++)" "$(depend.cc.o)"
+endif
+
+%.d:		%.cc
+ifeq ($(link_switch),static)
+		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.oo)" "$(depend.cc.o)"
+else
+		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.o++)" "$(depend.cc.o)"
+endif
+
+%.d:		%.C
+ifeq ($(link_switch),static)
+		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.oo)" "$(depend.cc.o)"
+else
+		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.o++)" "$(depend.cc.o)"
+endif
+
+%.o++:		%.c
+		$(dynamic_link.c)
+
+%.oo:		%.c
+		$(dynamic_link.c)
+
+%.so:		%.oo
+		$(dynamic_link.o)
+
+%.oo:		%.cc
+		$(dynamic_link.cc)
+
+%.o++:		%.cc
+		$(dynamic_link.cc)
+
+%.o++:		%.c++
+		$(dynamic_link.cc)
+
+%.o++:		%.cpp
+		$(dynamic_link.cc)
+
+%.o++:		%.cxx
+		$(dynamic_link.cc)
+
+%.o++:		%.C
+		$(dynamic_link.cc)
+
+%.so:		%.o++
+		$(dynamic_link.o++)
+
+# vim:ai sw=2 noexpandtab
+

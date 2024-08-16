@@ -1,0 +1,4 @@
+# automatically created 21.07.2023 07:50 by "make depend"
+min.o: min.cc types.hh min.hh minmax.hh
+max.o: max.cc types.hh max.hh minmax.hh
+main.o: main.cc types.hh min.hh minmax.hh max.hh

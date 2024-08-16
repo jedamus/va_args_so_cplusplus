@@ -1,0 +1,31 @@
+# va_args_so_c++.
+# Copyright (C) 2024 Leander Jedamus
+# This file is distributed under the same license as the va_args_so_c++ package.
+# ljedamus@web.de, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: va_args_so_c++ 1.0\n"
+"Report-Msgid-Bugs-To: Leander Jedamus <ljedamus@web.de>\n"
+"POT-Creation-Date: 2024-08-16 09:33+0200\n"
+"PO-Revision-Date: 2024-08-16 09:33+0200\n"
+"Last-Translator: Leander Jedamus <ljedamus@web.de>\n"
+"Language-Team: Leander Jedamus <ljedamus@web.de>\n"
+"Language: de en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: main.cc:75
+#, c-format
+msgid "%s V%s (C) %s by %s <%s>"
+msgstr ""
+
+#: main.cc:89
+msgid "Enter a number: "
+msgstr ""
+
+#: main.cc:99
+msgid "Please press 'q' to end program!"
+msgstr ""
