@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 # erzeugt Donnerstag, 02. November 2023 22:07 (C) 2023 von Leander Jedamus
+# modifiziert Samstag, 24. August 2024 09:13 von Leander Jedamus
 # modifiziert Freitag, 29. Dezember 2023 12:36 von Leander Jedamus
 # modifiziert Donnerstag, 28. Dezember 2023 07:13 von Leander Jedamus
 # modifiziert Samstag, 16. Dezember 2023 06:39 von Leander Jedamus
@@ -15,6 +16,11 @@
 
 # set -x
 set -e
+
+if [ -z $2 ]; then
+  echo "error: Please provide a backup-dir and the name of the tarfile and after that some files to backup"
+  exit 1
+fi
 
 locale=locale
 svn=.svn
@@ -33,27 +39,21 @@ mkdir -p $backup/$BACKUPDIR
 echo "copying files."
 cp -p $FILES $backup/$BACKUPDIR
 
-if [ -d $svn ]; then
-  cp -rp $svn $backup/$BACKUPDIR
-  DIRS="$DIRS $BACKUPDIR/$svn"
-fi
+dirs="$svn $git $locale"
 
-if [ -d $git ]; then
-  cp -rp $git $backup/$BACKUPDIR
-  DIRS="$DIRS $BACKUPDIR/$git"
-fi
-
-if [ -d $locale ]; then
-  cp -rp $locale $backup/$BACKUPDIR
-  DIRS="$BACKUPDIR/$locale"
-fi
+for dir in $dirs; do
+  if [ -d $dir ]; then
+    cp -rvp $dir $backup/$BACKUPDIR
+    DIRS="$DIRS $BACKUPDIR/$dir"
+  fi
+done
 
 actual_dir=$(pwd)
 
 cd $backup
 echo "creating zip-file \"$ZIPFILE\"."
 
-if [ ! -z $DIRS ]; then
+if [ ! -z "$DIRS" ]; then
   zip -r $ZIPFILE $DIRS
 fi
 

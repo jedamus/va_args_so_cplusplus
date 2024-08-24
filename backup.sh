@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 # erzeugt Mittwoch, 16. August 2023 12:49 (C) 2023 von Leander Jedamus
+# modifiziert Samstag, 24. August 2024 08:47 von Leander Jedamus
 # modifiziert Freitag, 15. Dezember 2023 07:23 von Leander Jedamus
 # modifiziert Dienstag, 07. November 2023 17:57 von Leander Jedamus
 # modifiziert Sonntag, 20. August 2023 14:45 von Leander Jedamus
@@ -9,6 +10,11 @@
 
 # set -x
 set -e
+
+if [ -z $2 ]; then
+  echo "error: Please provide a backup-dir and the name of the tarfile and after that some files to backup"
+  exit 1
+fi
 
 locale=locale
 svn=.svn
@@ -35,14 +41,14 @@ if [ -d $locale ]; then
   fi
 fi
 
-if [ -d $svn ]; then
-  cp -rvp $svn $backup/$BACKUPDIR
-fi
-  
-if [ -d $git ]; then
-  cp -rvp $git $backup/$BACKUPDIR
-fi
-  
+dirs="$svn $git"
+
+for dir in $dirs; do
+  if [ -d $dir ]; then
+    echo "copying $dir"
+    cp -rvp $dir $backup/$BACKUPDIR
+  fi
+done
 
 echo "copying $FILES"
 cp -p $FILES $backup/$BACKUPDIR
