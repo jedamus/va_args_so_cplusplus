@@ -1,4 +1,5 @@
 # erzeugt Samstag, 04. Juli 2015 14:04 (C) 2015 von Leander Jedamus
+# modifiziert Samstag, 24. August 2024 14:34 von Leander Jedamus
 # modifiziert Montag, 12. August 2024 09:42 von Leander Jedamus
 # modifiziert Dienstag, 06. August 2024 15:13 von Leander Jedamus
 # modifiziert Freitag, 23. Februar 2024 16:25 von Leander Jedamus
@@ -58,6 +59,7 @@ PRINTFILE		:= .print
 DATE			:= $(shell date +\"%y%m%d\")
 DATETIME		:= $(shell date +\"%d.%m.%Y\ %H:%M\")
 PROJECT			:= $(shell cat project.txt)
+PROJECT_FILES		:= project.hh version.hh
 # PROJECT		:= va_args_so_c++
 BACKUPDIR		:= $(PROJECT)
 TARFILE			:= $(BACKUPDIR).tar.gz
@@ -327,7 +329,7 @@ PROGRAM1		:= $(PROJECT)
 PROGRAMS		:= $(PROGRAM1) $(PROGRAM2)
 
 .PHONY:			all
-all::			$(PROGRAMS)
+all::			$(PROJECT_FILES) $(PROGRAMS)
 			@echo done.
 
 .PHONY:			strip
@@ -384,7 +386,7 @@ endif
 
 .PHONY:			distclean
 distclean:
-			@./distclean.sh $(strip $(CDEPENDS) $(CCDEPENDS) $(PRINTFILE) $(GMONFILE) $(PROFFILE) $(NMFILE) $(CLEAN))
+			@./distclean.sh $(strip $(CDEPENDS) $(CCDEPENDS) $(PRINTFILE) $(GMONFILE) $(PROFFILE) $(NMFILE) $(PROJECT_FILES) $(CLEAN))
 ifeq ($(machtype),MacOS)
 			$(RM) -r check.dSYM
 endif
@@ -399,11 +401,11 @@ $(PRINTFILE):		$(FILES)
 .PHONY:			dummy
 dummy:
 
-project.hh:		project.txt
+project.hh:		project.txt author.txt email.txt years.txt
 			@echo "creating $@"
 			@./create_project.sh $@
 
-version.hh:		version.txt
+version.hh:		version.txt author.txt
 			@echo "creating $@"
 			@./create_version.sh $@
 
