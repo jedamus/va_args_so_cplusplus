@@ -201,22 +201,9 @@ FILES			+= project.txt
 FILES			+= version.txt
 FILES			+= author.txt email.txt years.txt
 
-LIB1CPPFILES		:= min.@CPP@ max.@CPP@ getlocaledir.@CPP@
-LIB1CPPFILES2		:= getch.@CPP@
+LIB1CPPFILES		:= min.@CPP@ max.@CPP@
 CPPSOURCES		+= $(LIB1CPPFILES)
 CPPDEPENDS		+= $(LIB1CPPFILES:%.@CPP@=%.d)
-ifeq ($(machtype),Linux)
-  CPPSOURCES		+= $(LIB1CPPFILES2)
-  CPPDEPENDS		+= $(LIB1CPPFILES2:%.@CPP@=%.d)
-endif 
-ifeq ($(machtype),Arm)
-  CPPSOURCES		+= $(LIB1CPPFILES2)
-  CPPDEPENDS		+= $(LIB1CPPFILES2:%.@CPP@=%.d)
-endif 
-ifeq ($(machtype),MacOS)
-  CPPSOURCES		+= $(LIB1CPPFILES2)
-  CPPDEPENDS		+= $(LIB1CPPFILES2:%.@CPP@=%.d)
-endif 
 FILES			+= $(LIB1CPPFILES)
 LIB1HFILES		:= types.@HPP@ minmax.@HPP@ gettext.@HPP@ clrscr.@HPP@ macros.@HPP@
 LIB1HFILES		+= $(LIB1CPPFILES:%.@CPP@=%.@HPP@)
@@ -234,23 +221,15 @@ ifeq ($(link_switch),static)
   LIB1RARIES2		:= $(LIB1RARY2)
   LIB1OBJS1		:= $(LIB1CPPFILES:%.@CPP@=%.o++)
   LIB1OBJS1		+= $(LIB1CPPFILES2:%.@CPP@=%.o++)
-  OBJS1			:= $(LIB1OBJS1)
+  OBJSLIB1		:= $(LIB1OBJS1)
   LIB1RARY		:= lib$(LIB1RARYNAME).a
   LIB1RARIES		:= $(LIB1RARY)
   LIB1OBJS12		:= $(LIB1CPPFILES:%.@CPP@=%.oo)
   LIB1OBJS13		:= $(LIB1CPPFILES2:%.@CPP@=%.oo)
   LIB1OBJS		:= $(LIB1OBJS12)
-ifeq ($(machtype),Linux)
   LIB1OBJS		+= $(LIB1OBJS13)
-endif
-ifeq ($(machtype),Arm)
-  LIB1OBJS		+= $(LIB1OBJS13)
-endif
-ifeq ($(machtype),MacOS)
-  LIB1OBJS		+= $(LIB1OBJS13)
-endif
-  OBJS12		:= $(LIB1OBJS12)
-  OBJS			+= $(OBJS1) $(OBJS12) $(LIB1OBJS13)
+  OBJSLIB12		:= $(LIB1OBJS12)
+  OBJS			+= $(OBJSLIB1) $(OBJSLIB12) $(LIB1OBJS13)
   LIBRARIES		+= $(LIB1RARY) $(LIB1RARY2)
 else
   LIB1RARY2		:= lib$(LIB1RARYNAME).a
@@ -275,6 +254,55 @@ endif
   OBJSLIB12		:= $(LIB1OBJS12)
   OBJS			+= $(OBJSLIB12) $(OBJSLIB1) $(LIB1OBJS13)
   LIBRARIES		+= $(LIB1RARY2) $(LIB1RARY)
+endif
+
+LIB2CPPFILES		:= getlocaledir.@CPP@
+LIB2CPPFILES2		:= getch.@CPP@
+CPPSOURCES		+= $(LIB2CPPFILES)
+CPPDEPENDS		+= $(LIB2CPPFILES:%.@CPP@=%.d)
+CPPSOURCES		+= $(LIB2CPPFILES2)
+CPPDEPENDS		+= $(LIB2CPPFILES2:%.@CPP@=%.d)
+FILES			+= $(LIB2CPPFILES)
+LIB2HFILES		+= $(LIB2CPPFILES:%.@CPP@=%.@HPP@)
+FILES			+= $(LIB2HFILES)
+FILES			+= $(LIB2CPPFILES2)
+FILES			+= $(LIB2CPPFILES2:%.@CPP@=%.@HPP@)
+LIB2RARYNAME		:= subs2
+LIB2OBJ			:= lib$(LIB2RARYNAME).o
+
+LOADLIBES		+= -l$(LIB2RARYNAME)
+IS_IN_LIB		+= $(LIB2CPPFILES:%.@CPP@=%.d)
+
+ifeq ($(link_switch),static)
+  LIB2RARY2		:= lib$(LIB2RARYNAME).so
+  LIB2RARIES2		:= $(LIB2RARY2)
+  LIB2OBJS1		:= $(LIB2CPPFILES:%.@CPP@=%.o++)
+  LIB2OBJS1		+= $(LIB2CPPFILES2:%.@CPP@=%.o++)
+  OBJSLIB2		:= $(LIB2OBJS1)
+  LIB2RARY		:= lib$(LIB2RARYNAME).a
+  LIB2RARIES		:= $(LIB2RARY)
+  LIB2OBJS12		:= $(LIB2CPPFILES:%.@CPP@=%.oo)
+  LIB2OBJS13		:= $(LIB2CPPFILES2:%.@CPP@=%.oo)
+  LIB2OBJS		:= $(LIB2OBJS12)
+  LIB2OBJS		+= $(LIB2OBJS13)
+  OBJSLIB22		:= $(LIB2OBJS12)
+  OBJS			+= $(OBJSLIB2) $(OBJSLIB22) $(LIB2OBJS13)
+  LIBRARIES		+= $(LIB2RARY) $(LIB2RARY2)
+else
+  LIB2RARY2		:= lib$(LIB2RARYNAME).a
+  LIB2RARIES2		:= $(LIB2RARY2)
+  LIB2OBJS1		:= $(LIB2CPPFILES:%.@CPP@=%.oo)
+  LIB2OBJS1		+= $(LIB2CPPFILES2:%.@CPP@=%.oo)
+  OBJSLIB2		:= $(LIB2OBJS1)
+  LIB2RARY		:= lib$(LIB2RARYNAME).so
+  LIB2RARIES		:= $(LIB2RARY)
+  LIB2OBJS12		:= $(LIB2CPPFILES:%.@CPP@=%.o++)
+  LIB2OBJS13		+= $(LIB2CPPFILES2:%.@CPP@=%.o++)
+  LIB2OBJS		:= $(LIB2OBJS12)
+  LIB2OBJS		+= $(LIB2OBJS13)
+  OBJSLIB22		:= $(LIB2OBJS12)
+  OBJS			+= $(OBJSLIB22) $(OBJSLIB2) $(LIB2OBJS13)
+  LIBRARIES		+= $(LIB2RARY2) $(LIB2RARY)
 endif
 
 CMAINFILE		:= main.@CPP@
@@ -331,13 +359,20 @@ prof:			$(PROGRAM1)
 			$(PROF) $(PROGRAM1) $(GMONFILE) > $(PROFFILE)
 			$(NM) $(NMFLAGS) $(PROGRAM1) > $(NMFILE)
 
-$(PROGRAM1):		$(CPPDEPENDS) $(LIB1RARY) $(MAINOBJS)
+$(PROGRAM1):		$(CPPDEPENDS) $(LIB1RARY) $(LIB2RARY) $(MAINOBJS)
 			$(link.@CPP@)
 
 #check:			$(CPPOBJS)
 #			$(link.@CPP@)
 
 $(LIB1RARY):		$(LIB1OBJS)
+ifeq ($(link_switch),static)
+			$(archive)
+else
+			$(dynamic_link.o++)
+endif
+
+$(LIB2RARY):		$(LIB2OBJS)
 ifeq ($(link_switch),static)
 			$(archive)
 else
