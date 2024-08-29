@@ -353,7 +353,7 @@ endif
 
 .PHONY:			distclean
 distclean:
-			@./distclean.sh $(strip $(CDEPENDS) $(CPPDEPENDS) $(MAKEFILE) $(PRINTFILE) $(GMONFILE) $(PROFFILE) $(NMFILE) $(CLEAN))
+			@./distclean.sh $(strip $(CDEPENDS) $(CPPDEPENDS) $(MAKEFILE) $(PRINTFILE) $(GMONFILE) $(PROFFILE) $(NMFILE) $(PROJECT_FILES) $(CLEAN))
 ifeq ($(machtype),MacOS)
 			$(RM) -r check.dSYM
 endif
