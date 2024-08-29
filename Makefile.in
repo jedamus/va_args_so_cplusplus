@@ -50,7 +50,7 @@ SUFFIXES := .out .a .ln .o .c .cc .cpp .c++ .cxx .C .p .pas .f .F .for .f77 .f90
 .DELETE_ON_ERROR:
 
 debug_switch		:= true# false
-link_switch		:= static
+link_switch		:= shared# static
 
 DEPENDFILE		:= .depend
 PRINTFILE		:= .print
@@ -257,7 +257,7 @@ else
   LIB1RARIES2		:= $(LIB1RARY2)
   LIB1OBJS1		:= $(LIB1CPPFILES:%.@CPP@=%.oo)
   LIB1OBJS1		+= $(LIB1CPPFILES2:%.@CPP@=%.oo)
-  OBJS1			:= $(LIB1OBJS1)
+  OBJSLIB1		:= $(LIB1OBJS1)
   LIB1RARY		:= lib$(LIB1RARYNAME).so
   LIB1RARIES		:= $(LIB1RARY)
   LIB1OBJS12		:= $(LIB1CPPFILES:%.@CPP@=%.o++)
@@ -272,8 +272,8 @@ endif
 ifeq ($(machtype),MacOS)
   LIB1OBJS		+= $(LIB1OBJS13)
 endif
-  OBJS12		:= $(LIB1OBJS12)
-  OBJS			+= $(OBJS12) $(OBJS1) $(LIB1OBJS13)
+  OBJSLIB12		:= $(LIB1OBJS12)
+  OBJS			+= $(OBJSLIB12) $(OBJSLIB1) $(LIB1OBJS13)
   LIBRARIES		+= $(LIB1RARY2) $(LIB1RARY)
 endif
 
