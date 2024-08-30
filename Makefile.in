@@ -212,7 +212,7 @@ FILES			+= $(LIB1CPPFILES2)
 CPPDEPENDS		+= $(LIB1CPPFILES2:%.@CPP@=%.d)
 FILES			+= $(LIB1CPPFILES2:%.@CPP@=%.@HPP@)
 # add your cpp-files here, which don't have a corresponding header file:
-LIB1CPPFILES3		:= no_header.@CPP@
+#LIB1CPPFILES3		:= no_header.@CPP@
 CPPDEPENDS		+= $(LIB1CPPFILES3:%.@CPP@=%.d)
 FILES			+= $(LIB1CPPFILES3)
 LIB1RARYNAME		:= subs
