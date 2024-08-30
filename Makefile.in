@@ -50,7 +50,7 @@ SUFFIXES := .out .a .ln .o .c .cc .cpp .c++ .cxx .C .p .pas .f .F .for .f77 .f90
 .DELETE_ON_ERROR:
 
 debug_switch		:= true# false
-link_switch		:= static# shared# static
+link_switch		:= shared# static
 
 DEPENDFILE		:= .depend
 PRINTFILE		:= .print
@@ -235,7 +235,7 @@ ifeq ($(link_switch),static)
   LIB1RARIES		:= $(LIB1RARY)
   LIB1OBJS12		:= $(LIB1CPPFILES:%.@CPP@=%.oo)
   LIB1OBJS13		:= $(LIB1CPPFILES2:%.@CPP@=%.oo)
-  LIB1OBJS13		:= $(LIB1CPPFILES3:%.@CPP@=%.oo)
+  LIB1OBJS13		+= $(LIB1CPPFILES3:%.@CPP@=%.oo)
   LIB1OBJS		:= $(LIB1OBJS12)
   LIB1OBJS		+= $(LIB1OBJS13)
   OBJSLIB12		:= $(LIB1OBJS12)
@@ -251,7 +251,7 @@ else
   LIB1RARY		:= lib$(LIB1RARYNAME).so
   LIB1RARIES		:= $(LIB1RARY)
   LIB1OBJS12		:= $(LIB1CPPFILES:%.@CPP@=%.o++)
-  LIB1OBJS13		+= $(LIB1CPPFILES2:%.@CPP@=%.o++)
+  LIB1OBJS13		:= $(LIB1CPPFILES2:%.@CPP@=%.o++)
   LIB1OBJS13		+= $(LIB1CPPFILES3:%.@CPP@=%.o++)
   LIB1OBJS		:= $(LIB1OBJS12)
 ifeq ($(machtype),Linux)
