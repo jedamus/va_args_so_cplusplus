@@ -50,7 +50,7 @@ SUFFIXES := .out .a .ln .o .c .cc .cpp .c++ .cxx .C .p .pas .f .F .for .f77 .f90
 .DELETE_ON_ERROR:
 
 debug_switch		:= true# false
-link_switch		:= shared# static
+link_switch		:= static# shared# static
 
 DEPENDFILE		:= .depend
 PRINTFILE		:= .print
@@ -209,26 +209,30 @@ LIB1HFILES		:= types.@HPP@ minmax.@HPP@ gettext.@HPP@ clrscr.@HPP@ macros.@HPP@
 LIB1HFILES		+= $(LIB1CPPFILES:%.@CPP@=%.@HPP@)
 FILES			+= $(LIB1HFILES)
 FILES			+= $(LIB1CPPFILES2)
+CPPDEPENDS		+= $(LIB1CPPFILES2:%.@CPP@=%.d)
 FILES			+= $(LIB1CPPFILES2:%.@CPP@=%.@HPP@)
 # add your cpp-files here, which don't have a corresponding header file:
-#LIB1CPPFILES3		:= no_header.@CPP@
+LIB1CPPFILES3		:= no_header.@CPP@
+CPPDEPENDS		+= $(LIB1CPPFILES3:%.@CPP@=%.d)
 FILES			+= $(LIB1CPPFILES3)
 LIB1RARYNAME		:= subs
 LIB1OBJ			:= lib$(LIB1RARYNAME).o
 
 LOADLIBES		:= -l$(LIB1RARYNAME)
-IS_IN_LIB		:= $(LIB1CPPFILES:%.@CPP@=%.d)
+IS_IN_LIB		:= $(LIB1CPPFILES:%.@CPP@=%.d) $(LIB1CPPFILES2:%.@CPP@=%.d) $(LIB1CPPFILES3:%.@CPP@=%.d)
 
 ifeq ($(link_switch),static)
   LIB1RARY2		:= lib$(LIB1RARYNAME).so
   LIB1RARIES2		:= $(LIB1RARY2)
   LIB1OBJS1		:= $(LIB1CPPFILES:%.@CPP@=%.o++)
   LIB1OBJS1		+= $(LIB1CPPFILES2:%.@CPP@=%.o++)
+  LIB1OBJS1		+= $(LIB1CPPFILES3:%.@CPP@=%.o++)
   OBJSLIB1		:= $(LIB1OBJS1)
   LIB1RARY		:= lib$(LIB1RARYNAME).a
   LIB1RARIES		:= $(LIB1RARY)
   LIB1OBJS12		:= $(LIB1CPPFILES:%.@CPP@=%.oo)
   LIB1OBJS13		:= $(LIB1CPPFILES2:%.@CPP@=%.oo)
+  LIB1OBJS13		:= $(LIB1CPPFILES3:%.@CPP@=%.oo)
   LIB1OBJS		:= $(LIB1OBJS12)
   LIB1OBJS		+= $(LIB1OBJS13)
   OBJSLIB12		:= $(LIB1OBJS12)
@@ -239,11 +243,13 @@ else
   LIB1RARIES2		:= $(LIB1RARY2)
   LIB1OBJS1		:= $(LIB1CPPFILES:%.@CPP@=%.oo)
   LIB1OBJS1		+= $(LIB1CPPFILES2:%.@CPP@=%.oo)
+  LIB1OBJS1		+= $(LIB1CPPFILES3:%.@CPP@=%.oo)
   OBJSLIB1		:= $(LIB1OBJS1)
   LIB1RARY		:= lib$(LIB1RARYNAME).so
   LIB1RARIES		:= $(LIB1RARY)
   LIB1OBJS12		:= $(LIB1CPPFILES:%.@CPP@=%.o++)
   LIB1OBJS13		+= $(LIB1CPPFILES2:%.@CPP@=%.o++)
+  LIB1OBJS13		+= $(LIB1CPPFILES3:%.@CPP@=%.o++)
   LIB1OBJS		:= $(LIB1OBJS12)
 ifeq ($(machtype),Linux)
   LIB1OBJS		+= $(LIB1OBJS13)
@@ -282,23 +288,26 @@ FILES			+= $(LIB2CPPFILES2)
 FILES			+= $(LIB2CPPFILES2:%.@CPP@=%.@HPP@)
 # add your cpp-files here, which don't have a corresponding header file:
 #LIB2CPPFILES3		:= no_header.@CPP@
+#CPPDEPENDS		+= $(LIB2CPPFILES3:%.@CPP@=%.d)
 FILES			+= $(LIB2CPPFILES3)
 LIB2RARYNAME		:= subs2
 LIB2OBJ			:= lib$(LIB2RARYNAME).o
 
 LOADLIBES		+= -l$(LIB2RARYNAME)
-IS_IN_LIB		+= $(LIB2CPPFILES:%.@CPP@=%.d)
+IS_IN_LIB		+= $(LIB2CPPFILES:%.@CPP@=%.d) $(LIB2CPPFILES2:%.@CPP@=%.d) $(LIB2CPPFILES3:%.@CPP@=%.d)
 
 ifeq ($(link_switch),static)
   LIB2RARY2		:= lib$(LIB2RARYNAME).so
   LIB2RARIES2		:= $(LIB2RARY2)
   LIB2OBJS1		:= $(LIB2CPPFILES:%.@CPP@=%.o++)
   LIB2OBJS1		+= $(LIB2CPPFILES2:%.@CPP@=%.o++)
+  LIB2OBJS1		+= $(LIB2CPPFILES3:%.@CPP@=%.o++)
   OBJSLIB2		:= $(LIB2OBJS1)
   LIB2RARY		:= lib$(LIB2RARYNAME).a
   LIB2RARIES		:= $(LIB2RARY)
   LIB2OBJS12		:= $(LIB2CPPFILES:%.@CPP@=%.oo)
   LIB2OBJS13		:= $(LIB2CPPFILES2:%.@CPP@=%.oo)
+  LIB2OBJS13		:= $(LIB2CPPFILES3:%.@CPP@=%.oo)
   LIB2OBJS		:= $(LIB2OBJS12)
   LIB2OBJS		+= $(LIB2OBJS13)
   OBJSLIB22		:= $(LIB2OBJS12)
@@ -309,11 +318,13 @@ else
   LIB2RARIES2		:= $(LIB2RARY2)
   LIB2OBJS1		:= $(LIB2CPPFILES:%.@CPP@=%.oo)
   LIB2OBJS1		+= $(LIB2CPPFILES2:%.@CPP@=%.oo)
+  LIB2OBJS1		+= $(LIB2CPPFILES3:%.@CPP@=%.oo)
   OBJSLIB2		:= $(LIB2OBJS1)
   LIB2RARY		:= lib$(LIB2RARYNAME).so
   LIB2RARIES		:= $(LIB2RARY)
   LIB2OBJS12		:= $(LIB2CPPFILES:%.@CPP@=%.o++)
   LIB2OBJS13		+= $(LIB2CPPFILES2:%.@CPP@=%.o++)
+  LIB2OBJS13		+= $(LIB2CPPFILES3:%.@CPP@=%.o++)
   LIB2OBJS		:= $(LIB2OBJS12)
   LIB2OBJS		+= $(LIB2OBJS13)
   OBJSLIB22		:= $(LIB2OBJS12)
