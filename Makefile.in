@@ -179,8 +179,8 @@ CSOURCES		:= # put your c source files here \
 CDEPENDS		:= # here you add the .d files make from .c files
 CPPDEPENDS		:= # here you add the .d files make from .@CPP@ files
 IS_IN_LIB		:= # here you add the .d files, which obj-files are in a library
-CPPSOURCES.*		:= # put your c++ source files here. File types \
-			    "*.@CPP@,*.cpp,*.c++,*.cxx,*.C" are recognized. \
+CPPSOURCES		:= # put your c++ source files here. File types \
+			    "*.cc,*.cpp,*.c++,*.cxx,*.C" are recognized. \
 			    (will be used e.g. by "make depend")
 FILES			:= # put your source and other files here, that you \
                             want to be used e.g. in "make backup" and \
@@ -211,15 +211,18 @@ FILES			+= $(LIB1HFILES)
 FILES			+= $(LIB1CPPFILES2)
 CPPDEPENDS		+= $(LIB1CPPFILES2:%.@CPP@=%.d)
 FILES			+= $(LIB1CPPFILES2:%.@CPP@=%.@HPP@)
-# add your cpp-files here, which don't have a corresponding header file:
-#LIB1CPPFILES3		:= no_header.@CPP@
-CPPDEPENDS		+= $(LIB1CPPFILES3:%.@CPP@=%.d)
-FILES			+= $(LIB1CPPFILES3)
+
+# uncomment following 4 lines and add your cpp-files here, which don't have a corresponding header file:
+# LIB1CPPFILES3		:= no_header.@CPP@
+# CPPSOURCES		+= $(LIB1CPPFILES3)
+# CPPDEPENDS		+= $(LIB1CPPFILES3:%.@CPP@=%.d)
+# FILES			+= $(LIB1CPPFILES3)
+
 LIB1RARYNAME		:= subs
 LIB1OBJ			:= lib$(LIB1RARYNAME).o
 
 LOADLIBES		:= -l$(LIB1RARYNAME)
-IS_IN_LIB		:= $(LIB1CPPFILES:%.@CPP@=%.d) $(LIB1CPPFILES2:%.@CPP@=%.d) $(LIB1CPPFILES3:%.@CPP@=%.d)
+IS_IN_LIB		+= $(LIB1CPPFILES:%.@CPP@=%.d) $(LIB1CPPFILES2:%.@CPP@=%.d) $(LIB1CPPFILES3:%.@CPP@=%.d)
 
 ifeq ($(link_switch),static)
   LIB1RARY2		:= lib$(LIB1RARYNAME).so
@@ -279,17 +282,20 @@ endif
 
 CPPSOURCES		+= $(LIB2CPPFILES)
 CPPDEPENDS		+= $(LIB2CPPFILES:%.@CPP@=%.d)
-CPPSOURCES		+= $(LIB2CPPFILES2)
 CPPDEPENDS		+= $(LIB2CPPFILES2:%.@CPP@=%.d)
 FILES			+= $(LIB2CPPFILES)
 LIB2HFILES		+= $(LIB2CPPFILES:%.@CPP@=%.@HPP@)
 FILES			+= $(LIB2HFILES)
+CPPSOURCES		+= $(LIB2CPPFILES2)
 FILES			+= $(LIB2CPPFILES2)
 FILES			+= $(LIB2CPPFILES2:%.@CPP@=%.@HPP@)
-# add your cpp-files here, which don't have a corresponding header file:
-#LIB2CPPFILES3		:= no_header.@CPP@
-#CPPDEPENDS		+= $(LIB2CPPFILES3:%.@CPP@=%.d)
-FILES			+= $(LIB2CPPFILES3)
+
+# uncomment following 4 lines and add your cpp-files here, which don't have a corresponding header file:
+# LIB2CPPFILES3		:= no_header.@CPP@
+# CPPSOURCES		+= $(LIB2CPPFILES3)
+# CPPDEPENDS		+= $(LIB2CPPFILES3:%.@CPP@=%.d)
+# FILES			+= $(LIB2CPPFILES3)
+
 LIB2RARYNAME		:= subs2
 LIB2OBJ			:= lib$(LIB2RARYNAME).o
 
@@ -307,7 +313,7 @@ ifeq ($(link_switch),static)
   LIB2RARIES		:= $(LIB2RARY)
   LIB2OBJS12		:= $(LIB2CPPFILES:%.@CPP@=%.oo)
   LIB2OBJS13		:= $(LIB2CPPFILES2:%.@CPP@=%.oo)
-  LIB2OBJS13		:= $(LIB2CPPFILES3:%.@CPP@=%.oo)
+  LIB2OBJS13		+= $(LIB2CPPFILES3:%.@CPP@=%.oo)
   LIB2OBJS		:= $(LIB2OBJS12)
   LIB2OBJS		+= $(LIB2OBJS13)
   OBJSLIB22		:= $(LIB2OBJS12)
@@ -323,7 +329,7 @@ else
   LIB2RARY		:= lib$(LIB2RARYNAME).so
   LIB2RARIES		:= $(LIB2RARY)
   LIB2OBJS12		:= $(LIB2CPPFILES:%.@CPP@=%.o++)
-  LIB2OBJS13		+= $(LIB2CPPFILES2:%.@CPP@=%.o++)
+  LIB2OBJS13		:= $(LIB2CPPFILES2:%.@CPP@=%.o++)
   LIB2OBJS13		+= $(LIB2CPPFILES3:%.@CPP@=%.o++)
   LIB2OBJS		:= $(LIB2OBJS12)
   LIB2OBJS		+= $(LIB2OBJS13)
@@ -371,6 +377,8 @@ debug:
 			@echo "$$""(OBJS12)=$(strip $(OBJS12))"
 			@echo "$$""(PROGRAMS)=$(strip $(PROGRAMS))"
 			@echo "$$""(LIB1OBJS)=$(strip $(LIB1OBJS))"
+			@echo "$$""(LIB2OBJS)=$(strip $(LIB2OBJS))"
+			@echo "$$""(IS_IN_LIB)=$(strip $(IS_IN_LIB))"
 
 .PHONY:			debugger
 debugger:		$(PROGRAM1)
