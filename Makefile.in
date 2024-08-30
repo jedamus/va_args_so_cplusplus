@@ -210,6 +210,9 @@ LIB1HFILES		+= $(LIB1CPPFILES:%.@CPP@=%.@HPP@)
 FILES			+= $(LIB1HFILES)
 FILES			+= $(LIB1CPPFILES2)
 FILES			+= $(LIB1CPPFILES2:%.@CPP@=%.@HPP@)
+# add your cpp-files here, which don't have a corresponding header file:
+#LIB1CPPFILES3		:= no_header.@CPP@
+FILES			+= $(LIB1CPPFILES3)
 LIB1RARYNAME		:= subs
 LIB1OBJ			:= lib$(LIB1RARYNAME).o
 
@@ -257,7 +260,17 @@ endif
 endif
 
 LIB2CPPFILES		:= getlocaledir.@CPP@
-LIB2CPPFILES2		:= getch.@CPP@
+
+ifeq ($(machtype),Linux)
+  LIB2CPPFILES2		:= getch.@CPP@
+endif
+ifeq ($(machtype),Arm)
+  LIB2CPPFILES2		:= getch.@CPP@
+endif
+ifeq ($(machtype),MacOS)
+  LIB2CPPFILES2		:= getch.@CPP@
+endif
+
 CPPSOURCES		+= $(LIB2CPPFILES)
 CPPDEPENDS		+= $(LIB2CPPFILES:%.@CPP@=%.d)
 CPPSOURCES		+= $(LIB2CPPFILES2)
@@ -267,6 +280,9 @@ LIB2HFILES		+= $(LIB2CPPFILES:%.@CPP@=%.@HPP@)
 FILES			+= $(LIB2HFILES)
 FILES			+= $(LIB2CPPFILES2)
 FILES			+= $(LIB2CPPFILES2:%.@CPP@=%.@HPP@)
+# add your cpp-files here, which don't have a corresponding header file:
+#LIB2CPPFILES3		:= no_header.@CPP@
+FILES			+= $(LIB2CPPFILES3)
 LIB2RARYNAME		:= subs2
 LIB2OBJ			:= lib$(LIB2RARYNAME).o
 
