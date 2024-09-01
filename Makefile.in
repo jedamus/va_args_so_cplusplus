@@ -1,4 +1,5 @@
 # erzeugt Samstag, 04. Juli 2015 14:04 (C) 2015 von Leander Jedamus
+# modifiziert Sonntag, 01. September 2024 09:12 von Leander Jedamus
 # modifiziert Montag, 12. August 2024 09:42 von Leander Jedamus
 # modifiziert Dienstag, 06. August 2024 15:13 von Leander Jedamus
 # modifiziert Freitag, 23. Februar 2024 16:25 von Leander Jedamus
@@ -50,7 +51,7 @@ SUFFIXES := .out .a .ln .o .c .cc .cpp .c++ .cxx .C .p .pas .f .F .for .f77 .f90
 .DELETE_ON_ERROR:
 
 debug_switch		:= true# false
-link_switch		:= shared# static
+link_switch		:= static# shared# static
 
 DEPENDFILE		:= .depend
 PRINTFILE		:= .print
@@ -201,58 +202,57 @@ FILES			+= project.txt
 FILES			+= version.txt
 FILES			+= author.txt email.txt years.txt
 
+# Library 1:
+
 LIB1CPPFILES		:= min.@CPP@ max.@CPP@
 CPPSOURCES		+= $(LIB1CPPFILES)
-CPPDEPENDS		+= $(LIB1CPPFILES:%.@CPP@=%.d)
+LIB1DEPENDS		:= $(LIB1CPPFILES:%.@CPP@=%.d)
 FILES			+= $(LIB1CPPFILES)
 LIB1HFILES		:= types.@HPP@ minmax.@HPP@ gettext.@HPP@ clrscr.@HPP@ macros.@HPP@
 LIB1HFILES		+= $(LIB1CPPFILES:%.@CPP@=%.@HPP@)
 FILES			+= $(LIB1HFILES)
 FILES			+= $(LIB1CPPFILES2)
-CPPDEPENDS		+= $(LIB1CPPFILES2:%.@CPP@=%.d)
+LIB1DEPENDS		+= $(LIB1CPPFILES2:%.@CPP@=%.d)
 FILES			+= $(LIB1CPPFILES2:%.@CPP@=%.@HPP@)
 
 # uncomment following 4 lines and add your cpp-files here, which don't have a corresponding header file:
 # LIB1CPPFILES3		:= no_header.@CPP@
 # CPPSOURCES		+= $(LIB1CPPFILES3)
-# CPPDEPENDS		+= $(LIB1CPPFILES3:%.@CPP@=%.d)
+# LIB1DEPENDS		+= $(LIB1CPPFILES3:%.@CPP@=%.d)
 # FILES			+= $(LIB1CPPFILES3)
 
+CPPDEPENDS		+= $(LIB1DEPENDS)
 LIB1RARYNAME		:= subs
 LIB1OBJ			:= lib$(LIB1RARYNAME).o
 
 LOADLIBES		:= -l$(LIB1RARYNAME)
-IS_IN_LIB		+= $(LIB1CPPFILES:%.@CPP@=%.d) $(LIB1CPPFILES2:%.@CPP@=%.d) $(LIB1CPPFILES3:%.@CPP@=%.d)
+IS_IN_LIB		+= $(LIB1DEPENDS)
 
 ifeq ($(link_switch),static)
   LIB1RARY2		:= lib$(LIB1RARYNAME).so
   LIB1RARIES2		:= $(LIB1RARY2)
-  LIB1OBJS1		:= $(LIB1CPPFILES:%.@CPP@=%.o++)
-  LIB1OBJS1		+= $(LIB1CPPFILES2:%.@CPP@=%.o++)
-  LIB1OBJS1		+= $(LIB1CPPFILES3:%.@CPP@=%.o++)
+  LIB1OBJNAM1		:= $(LIB1CPPFILES:%.@CPP@=%.oso) $(LIB1CPPFILES2:%.@CPP@=%.oso) $(LIB1CPPFILES3:%.@CPP@=%.oso)
+  LIB1OBJS1		:= $(LIB1OBJNAM1)
   OBJSLIB1		:= $(LIB1OBJS1)
   LIB1RARY		:= lib$(LIB1RARYNAME).a
   LIB1RARIES		:= $(LIB1RARY)
-  LIB1OBJS12		:= $(LIB1CPPFILES:%.@CPP@=%.oo)
-  LIB1OBJS13		:= $(LIB1CPPFILES2:%.@CPP@=%.oo)
-  LIB1OBJS13		+= $(LIB1CPPFILES3:%.@CPP@=%.oo)
+  LIB1OBJNAM2           := $(LIB1CPPFILES:%.@CPP@=%.oo) $(LIB1CPPFILES2:%.@CPP@=%.oo) $(LIB1CPPFILES3:%.@CPP@=%.oo)
+  LIB1OBJS12		:= $(LIB1OBJNAM2)
   LIB1OBJS		:= $(LIB1OBJS12)
-  LIB1OBJS		+= $(LIB1OBJS13)
   OBJSLIB12		:= $(LIB1OBJS12)
-  OBJS			+= $(OBJSLIB1) $(OBJSLIB12) $(LIB1OBJS13)
+  OBJS			+= $(OBJSLIB1) $(OBJSLIB12)
   LIBRARIES		+= $(LIB1RARY) $(LIB1RARY2)
 else
   LIB1RARY2		:= lib$(LIB1RARYNAME).a
   LIB1RARIES2		:= $(LIB1RARY2)
-  LIB1OBJS1		:= $(LIB1CPPFILES:%.@CPP@=%.oo)
-  LIB1OBJS1		+= $(LIB1CPPFILES2:%.@CPP@=%.oo)
-  LIB1OBJS1		+= $(LIB1CPPFILES3:%.@CPP@=%.oo)
+  LIB1OBJNAM1		:= $(LIB1CPPFILES:%.@CPP@=%.oo) $(LIB1CPPFILES2:%.@CPP@=%.oo) $(LIB1CPPFILES3:%.@CPP@=%.oo)
+  LIB1OBJS1		:= $(LIB1OBJNAM1)
   OBJSLIB1		:= $(LIB1OBJS1)
   LIB1RARY		:= lib$(LIB1RARYNAME).so
   LIB1RARIES		:= $(LIB1RARY)
-  LIB1OBJS12		:= $(LIB1CPPFILES:%.@CPP@=%.o++)
-  LIB1OBJS13		:= $(LIB1CPPFILES2:%.@CPP@=%.o++)
-  LIB1OBJS13		+= $(LIB1CPPFILES3:%.@CPP@=%.o++)
+  LIB1OBJNAM2		:= $(LIB1CPPFILES:%.@CPP@=%.oso) $(LIB1CPPFILES3:%.@CPP@=%.oso)
+  LIB1OBJS13		:= $(LIB1CPPFILES2:%.@CPP@=%.oso)
+  LIB1OBJS12		:= $(LIB1OBJNAM2)
   LIB1OBJS		:= $(LIB1OBJS12)
 ifeq ($(machtype),Linux)
   LIB1OBJS		+= $(LIB1OBJS13)
@@ -268,6 +268,8 @@ endif
   LIBRARIES		+= $(LIB1RARY2) $(LIB1RARY)
 endif
 
+# Library 2:
+
 LIB2CPPFILES		:= getlocaledir.@CPP@
 
 ifeq ($(machtype),Linux)
@@ -281,8 +283,7 @@ ifeq ($(machtype),MacOS)
 endif
 
 CPPSOURCES		+= $(LIB2CPPFILES)
-CPPDEPENDS		+= $(LIB2CPPFILES:%.@CPP@=%.d)
-CPPDEPENDS		+= $(LIB2CPPFILES2:%.@CPP@=%.d)
+LIB2DEPENDS		:= $(LIB2CPPFILES:%.@CPP@=%.d) $(LIB2CPPFILES2:%.@CPP@=%.d) 
 FILES			+= $(LIB2CPPFILES)
 LIB2HFILES		+= $(LIB2CPPFILES:%.@CPP@=%.@HPP@)
 FILES			+= $(LIB2HFILES)
@@ -291,29 +292,29 @@ FILES			+= $(LIB2CPPFILES2)
 FILES			+= $(LIB2CPPFILES2:%.@CPP@=%.@HPP@)
 
 # uncomment following 4 lines and add your cpp-files here, which don't have a corresponding header file:
-# LIB2CPPFILES3		:= no_header.@CPP@
-# CPPSOURCES		+= $(LIB2CPPFILES3)
-# CPPDEPENDS		+= $(LIB2CPPFILES3:%.@CPP@=%.d)
-# FILES			+= $(LIB2CPPFILES3)
+LIB2CPPFILES3		:= no_header.@CPP@
+CPPSOURCES		+= $(LIB2CPPFILES3)
+LIB2DEPENDS		+= $(LIB2CPPFILES3:%.@CPP@=%.d)
+FILES			+= $(LIB2CPPFILES3)
 
+CPPDEPENDS		+= $(LIB2DEPENDS)
 LIB2RARYNAME		:= subs2
 LIB2OBJ			:= lib$(LIB2RARYNAME).o
 
 LOADLIBES		+= -l$(LIB2RARYNAME)
-IS_IN_LIB		+= $(LIB2CPPFILES:%.@CPP@=%.d) $(LIB2CPPFILES2:%.@CPP@=%.d) $(LIB2CPPFILES3:%.@CPP@=%.d)
+IS_IN_LIB		+= $(LIB2DEPENDS)
 
 ifeq ($(link_switch),static)
   LIB2RARY2		:= lib$(LIB2RARYNAME).so
   LIB2RARIES2		:= $(LIB2RARY2)
-  LIB2OBJS1		:= $(LIB2CPPFILES:%.@CPP@=%.o++)
-  LIB2OBJS1		+= $(LIB2CPPFILES2:%.@CPP@=%.o++)
-  LIB2OBJS1		+= $(LIB2CPPFILES3:%.@CPP@=%.o++)
+  LIB2OBJNAM1		:= $(LIB2CPPFILES:%.@CPP@=%.oso) $(LIB2CPPFILES2:%.@CPP@=%.oso) $(LIB2CPPFILES3:%.@CPP@=%.oso)
+  LIB2OBJS1		:= $(LIB2OBJNAM1)
   OBJSLIB2		:= $(LIB2OBJS1)
   LIB2RARY		:= lib$(LIB2RARYNAME).a
   LIB2RARIES		:= $(LIB2RARY)
-  LIB2OBJS12		:= $(LIB2CPPFILES:%.@CPP@=%.oo)
-  LIB2OBJS13		:= $(LIB2CPPFILES2:%.@CPP@=%.oo)
-  LIB2OBJS13		+= $(LIB2CPPFILES3:%.@CPP@=%.oo)
+  LIB2OBJS12		:= $(LIB2CPPFILES:%.@CPP@=%.oo) 
+  LIB2OBJNAM2           := $(LIB2CPPFILES2:%.@CPP@=%.oo) $(LIB2CPPFILES3:%.@CPP@=%.oo)
+  LIB2OBJS13		:= $(LIB2OBJNAM2)
   LIB2OBJS		:= $(LIB2OBJS12)
   LIB2OBJS		+= $(LIB2OBJS13)
   OBJSLIB22		:= $(LIB2OBJS12)
@@ -322,21 +323,22 @@ ifeq ($(link_switch),static)
 else
   LIB2RARY2		:= lib$(LIB2RARYNAME).a
   LIB2RARIES2		:= $(LIB2RARY2)
-  LIB2OBJS1		:= $(LIB2CPPFILES:%.@CPP@=%.oo)
-  LIB2OBJS1		+= $(LIB2CPPFILES2:%.@CPP@=%.oo)
-  LIB2OBJS1		+= $(LIB2CPPFILES3:%.@CPP@=%.oo)
+  LIB2OBJNAM1		:= $(LIB2CPPFILES:%.@CPP@=%.oo) $(LIB2CPPFILES2:%.@CPP@=%.oo) $(LIB2CPPFILES3:%.@CPP@=%.oo)
+  LIB2OBJS1		:= $(LIB2OBJNAM1)
   OBJSLIB2		:= $(LIB2OBJS1)
   LIB2RARY		:= lib$(LIB2RARYNAME).so
   LIB2RARIES		:= $(LIB2RARY)
-  LIB2OBJS12		:= $(LIB2CPPFILES:%.@CPP@=%.o++)
-  LIB2OBJS13		:= $(LIB2CPPFILES2:%.@CPP@=%.o++)
-  LIB2OBJS13		+= $(LIB2CPPFILES3:%.@CPP@=%.o++)
+  LIB2OBJS12		:= $(LIB2CPPFILES:%.@CPP@=%.oso)
+  LIB2OBJNAM2		:= $(LIB2CPPFILES2:%.@CPP@=%.oso) $(LIB2CPPFILES3:%.@CPP@=%.oso)
+  LIB2OBJS13		:= $(LIB2OBJNAM2)
   LIB2OBJS		:= $(LIB2OBJS12)
   LIB2OBJS		+= $(LIB2OBJS13)
   OBJSLIB22		:= $(LIB2OBJS12)
   OBJS			+= $(OBJSLIB22) $(OBJSLIB2) $(LIB2OBJS13)
   LIBRARIES		+= $(LIB2RARY2) $(LIB2RARY)
 endif
+
+# Main:
 
 CMAINFILE		:= main.@CPP@
 CPPSOURCES		+= $(CMAINFILE)
@@ -346,7 +348,7 @@ MAINOBJS		:= $(CMAINFILE:%.@CPP@=%.o)
 OBJS			+= $(MAINOBJS)
 
 CLEAN			= $(strip $(filter %.o,$(OBJS)) \
-		            $(filter %.o++,$(OBJS)) \
+		            $(filter %.oso,$(OBJS)) \
 		            $(filter %.oo,$(OBJS)) \
 			    $(LIBRARIES) $(PROGRAMS) \
 			   )
@@ -404,14 +406,14 @@ $(LIB1RARY):		$(LIB1OBJS)
 ifeq ($(link_switch),static)
 			$(archive)
 else
-			$(dynamic_link.o++)
+			$(dynamic_link.oso)
 endif
 
 $(LIB2RARY):		$(LIB2OBJS)
 ifeq ($(link_switch),static)
 			$(archive)
 else
-			$(dynamic_link.o++)
+			$(dynamic_link.oso)
 endif
 
 .PHONY:			clean
