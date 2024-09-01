@@ -1,5 +1,5 @@
 # erzeugt Samstag, 04. Juli 2015 14:04 (C) 2015 von Leander Jedamus
-# modifiziert Sonntag, 01. September 2024 09:48 von Leander Jedamus
+# modifiziert Sonntag, 01. September 2024 16:58 von Leander Jedamus
 # modifiziert Mittwoch, 15. November 2023 16:33 von Leander Jedamus
 # modifiziert Mittwoch, 16. August 2023 14:31 von Leander Jedamus
 # modifiziert Dienstag, 15. August 2023 07:53 von Leander Jedamus
@@ -119,55 +119,122 @@ endef
 %.o:		%.c
 		$(compile.c)
 
-%.d:		%.c
-ifeq ($(link_switch),static)
-		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.c.oo)" "$(depend.c.o)"
-else
-		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.c.oso)" "$(depend.c.o)"
-endif
+%.d:		%.c %.o
+		# @echo "making $@ from $<"
+		$(depend.c.o)
+
+%.d:		%.c %.oo
+		# @echo "making $@ from $<"
+		$(depend.c.oo)
+
+%.d:		%.c %.oso
+		# @echo "making $@ from $<"
+		$(depend.c.oso)
 
 %.o:		%.c++
+		$(compile.cc)
+
+%.oo:		%.c++
+		$(compile.cc)
+
+%.oso:		%.c++
 		$(compile.cc)
 
 %.o:		%.cpp
 		$(compile.cc)
 
+%.oo:		%.cpp
+		$(compile.cc)
+
+%.oso:		%.cpp
+		$(compile.cc)
+
 %.o:		%.cxx
+		$(compile.cc)
+
+%.oo:		%.cxx
+		$(compile.cc)
+
+%.oso:		%.cxx
 		$(compile.cc)
 
 %.o:		%.cc
 		$(compile.cc)
 
+%.oo:		%.cc
+		$(compile.cc)
+
+%.oso:		%.cc
+		$(compile.cc)
+
 %.o:		%.C
 		$(compile.cc)
 
-%.d:		%.c++
-ifeq ($(link_switch),static)
-		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.oo)" "$(depend.cc.o)"
-else
-		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.oso)" "$(depend.cc.o)"
-endif
+%.oo:		%.C
+		$(compile.cc)
 
-%.d:		%.cpp
-ifeq ($(link_switch),static)
-		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.oo)" "$(depend.cc.o)"
-else
-		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.oso)" "$(depend.cc.o)"
-endif
+%.oso:		%.C
+		$(compile.cc)
 
-%.d:		%.cxx
-ifeq ($(link_switch),static)
-		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.oo)" "$(depend.cc.o)"
-else
-		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.oso)" "$(depend.cc.o)"
-endif
+%.d:		%.c++ %.o
+		# @echo "making $@ from $<"
+		$(depend.cc.o) 
 
-%.d:		%.cc
-ifeq ($(link_switch),static)
-		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.oo)" "$(depend.cc.o)"
-else
-		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.oso)" "$(depend.cc.o)"
-endif
+%.d:		%.c++ %.oo
+		# @echo "making $@ from $<"
+		$(depend.cc.oo) 
+
+%.d:		%.c++ %.oso
+		# @echo "making $@ from $<"
+		$(depend.cc.oso) 
+
+%.d:		%.cpp %.o
+		# @echo "making $@ from $<"
+		$(depend.cc.o) 
+
+%.d:		%.cpp %.oo
+		# @echo "making $@ from $<"
+		$(depend.cc.oo) 
+
+%.d:		%.cpp %.oso
+		# @echo "making $@ from $<"
+		$(depend.cc.oso) 
+
+%.d:		%.cxx %.o
+		# @echo "making $@ from $<"
+		$(depend.cc.o) 
+
+%.d:		%.cxx %.oo
+		# @echo "making $@ from $<"
+		$(depend.cc.oo) 
+
+%.d:		%.cxx %.oso
+		# @echo "making $@ from $<"
+		$(depend.cc.oso) 
+
+%.d:		%.cc %.o
+		# @echo "making $@ from $<"
+		$(depend.cc.o) 
+
+%.d:		%.cc %.oo
+		# @echo "making $@ from $<"
+		$(depend.cc.oo) 
+
+%.d:		%.cc %.oso
+		# @echo "making $@ from $<"
+		$(depend.cc.oso) 
+
+%.d:		%.C %.o
+		# @echo "making $@ from $<"
+		$(depend.cc.o) 
+
+%.d:		%.C %.oo
+		# @echo "making $@ from $<"
+		$(depend.cc.oo) 
+
+%.d:		%.C %.oso
+		# @echo "making $@ from $<"
+		$(depend.cc.oso) 
 
 %.d:		%.C
 ifeq ($(link_switch),static)
