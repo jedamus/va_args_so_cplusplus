@@ -179,7 +179,7 @@ CSOURCES		:= # put your c source files here \
 			    (will be used e.g. by "make depend")
 CDEPENDS		:= # here you add the .d files make from .c files
 CPPDEPENDS		:= # here you add the .d files make from .@CPP@ files
-IS_IN_LIB		:= # here you add the .d files, which obj-files are in a library
+IS_IN_LIB		:= # no longer needed
 CPPSOURCES		:= # put your c++ source files here. File types \
 			    "*.cc,*.cpp,*.c++,*.cxx,*.C" are recognized. \
 			    (will be used e.g. by "make depend")
@@ -226,7 +226,6 @@ LIB1RARYNAME		:= subs
 LIB1OBJ			:= lib$(LIB1RARYNAME).o
 
 LOADLIBES		:= -l$(LIB1RARYNAME)
-IS_IN_LIB		+= $(LIB1DEPENDS)
 
 ifeq ($(link_switch),static)
   LIB1RARY2		:= lib$(LIB1RARYNAME).so
@@ -302,7 +301,6 @@ LIB2RARYNAME		:= subs2
 LIB2OBJ			:= lib$(LIB2RARYNAME).o
 
 LOADLIBES		+= -l$(LIB2RARYNAME)
-IS_IN_LIB		+= $(LIB2DEPENDS)
 
 ifeq ($(link_switch),static)
   LIB2RARY2		:= lib$(LIB2RARYNAME).so
