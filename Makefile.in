@@ -405,11 +405,11 @@ $(PROGRAM1):		$(CPPDEPENDS) $(LIB1RARY) $(LIB2RARY) $(MAINOBJS)
 #			$(link.cc)
 
 $(LIB1RARY):		$(LIB1OBJS)
-ifeq ($(link_switch),static)
+#ifeq ($(link_switch),static)
 			$(archive)
-else
-			$(dynamic_link.oso)
-endif
+#else
+#			$(dynamic_link.oso)
+#endif
 
 $(LIB2RARY):		$(LIB2OBJS)
 ifeq ($(link_switch),static)
