@@ -228,6 +228,7 @@ LIB1OBJ			:= lib$(LIB1RARYNAME).o
 LOADLIBES		:= -l$(LIB1RARYNAME)
 
 link_switch := static
+lib1_switch := $(link_switch)
 
 ifeq ($(link_switch),static)
   LIB1RARY2		:= lib$(LIB1RARYNAME).so
@@ -305,6 +306,7 @@ LIB2OBJ			:= lib$(LIB2RARYNAME).o
 LOADLIBES		+= -l$(LIB2RARYNAME)
 
 link_switch := shared
+lib2_switch := $(link_switch)
 
 ifeq ($(link_switch),static)
   LIB2RARY2		:= lib$(LIB2RARYNAME).so
@@ -405,14 +407,14 @@ $(PROGRAM1):		$(CPPDEPENDS) $(LIB1RARY) $(LIB2RARY) $(MAINOBJS)
 #			$(link.cc)
 
 $(LIB1RARY):		$(LIB1OBJS)
-ifeq ($(link_switch),static2)
+ifeq ($(lib1_switch),static)
 			$(archive)
 else
 			$(dynamic_link.oso)
-endif
+ endif
 
 $(LIB2RARY):		$(LIB2OBJS)
-ifeq ($(link_switch),static)
+ifeq ($(lib2_switch),static)
 			$(archive)
 else
 			$(dynamic_link.oso)
