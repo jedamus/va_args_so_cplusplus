@@ -227,6 +227,8 @@ LIB1OBJ			:= lib$(LIB1RARYNAME).o
 
 LOADLIBES		:= -l$(LIB1RARYNAME)
 
+link_switch := static
+
 ifeq ($(link_switch),static)
   LIB1RARY2		:= lib$(LIB1RARYNAME).so
   LIB1RARIES2		:= $(LIB1RARY2)
@@ -301,6 +303,8 @@ LIB2RARYNAME		:= subs2
 LIB2OBJ			:= lib$(LIB2RARYNAME).o
 
 LOADLIBES		+= -l$(LIB2RARYNAME)
+
+link_switch := shared
 
 ifeq ($(link_switch),static)
   LIB2RARY2		:= lib$(LIB2RARYNAME).so
