@@ -292,10 +292,10 @@ FILES			+= $(LIB2CPPFILES2)
 FILES			+= $(LIB2CPPFILES2:%.@CPP@=%.@HPP@)
 
 # uncomment following 4 lines and add your cpp-files here, which don't have a corresponding header file:
-LIB2CPPFILES3		:= no_header.@CPP@
-CPPSOURCES		+= $(LIB2CPPFILES3)
-LIB2DEPENDS		+= $(LIB2CPPFILES3:%.@CPP@=%.d)
-FILES			+= $(LIB2CPPFILES3)
+# LIB2CPPFILES3		:= no_header.@CPP@
+# CPPSOURCES		+= $(LIB2CPPFILES3)
+# 	LIB2DEPENDS		+= $(LIB2CPPFILES3:%.@CPP@=%.d)
+# FILES				+= $(LIB2CPPFILES3)
 
 CPPDEPENDS		+= $(LIB2DEPENDS)
 LIB2RARYNAME		:= subs2
