@@ -397,10 +397,10 @@ prof:			$(PROGRAM1)
 			$(NM) $(NMFLAGS) $(PROGRAM1) > $(NMFILE)
 
 $(PROGRAM1):		$(CPPDEPENDS) $(LIB1RARY) $(LIB2RARY) $(MAINOBJS)
-			$(link.@CPP@)
+			$(link.cc)
 
 #check:			$(CPPOBJS)
-#			$(link.@CPP@)
+#			$(link.cc)
 
 $(LIB1RARY):		$(LIB1OBJS)
 ifeq ($(link_switch),static)
