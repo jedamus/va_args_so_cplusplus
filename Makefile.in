@@ -134,13 +134,13 @@ LDFLAGS			+= -L .# -s
 
 ifneq ($(link_switch),static)
   ifeq ($(CC),clang)
-    LDFLAGS    		+= -L `pwd` -Xlinker -rpath -Xlinker `pwd`
+    LDFLAGS    		+= -L $(shell pwd) -Xlinker -rpath -Xlinker $(shell pwd)
   else
-    LDFLAGS		+= -Wl,--rpath=$(shell echo `pwd`)
+    LDFLAGS		+= -Wl,--rpath=$(shell pwd)
   endif
 endif
 
-#LDFLAGS		+= --rpath=$(shell echo `pwd`) # for other compilers
+#LDFLAGS		+= --rpath=$(shell pwd) # for other compilers
 #LDFLAGS		+= --rpath=.
 LDLIBS			+= -lm
 # LDLIBS		+= -lefence
