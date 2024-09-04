@@ -124,7 +124,7 @@ endif
 CPPFLAGS		+= -pipe
 
 ifeq ($(machtype),MacOS)
-  CPPFLAGS		+= -I/usr.olcal/Cellar/gettext/0.19.3/include
+  CPPFLAGS		+= -I/usr/local/Cellar/gettext/0.19.3/include
 endif
 
 CPPFLAGS		+= # -traditional
@@ -151,7 +151,7 @@ LDLIBS			+= -ll # lex
 LDLIBS			+= -ly # yacc
 
 ifeq ($(machtype),MacOS)
-  LDFLAGS		+= -L /usr.olcal/lib
+  LDFLAGS		+= -L /usr/local/lib
   LDLIBS		+= -lintl
 endif
 
