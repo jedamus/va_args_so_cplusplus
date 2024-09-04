@@ -1,5 +1,5 @@
 # erzeugt Samstag, 04. Juli 2015 14:04 (C) 2015 von Leander Jedamus
-# modifiziert Mittwoch, 04. September 2024 20:59 von Leander Jedamus
+# modifiziert Mittwoch, 04. September 2024 21:38 von Leander Jedamus
 # modifiziert Montag, 02. September 2024 23:10 von Leander Jedamus
 # modifiziert Sonntag, 01. September 2024 16:58 von Leander Jedamus
 # modifiziert Mittwoch, 15. November 2023 16:33 von Leander Jedamus
@@ -64,18 +64,18 @@ $(AR) $(ARFLAGS) $@ $^
 $(RANLIB) $@
 endef
 
-define dynamic_library.c
+define library_compile.c
 $(RM) $@
 $(strip $(COMPILE.c) -fPIC $< $(OUTPUT_OPTION))
 endef
 
-define dynamic_library.cc
+define library_compile.cc
 $(RM) $@
 $(strip $(COMPILE.cc) -fPIC $< $(OUTPUT_OPTION))
 endef
 
 ifeq ($(machtype),MacOS)
-  define dynamic_library.o
+  define dynamic_library.lo
     $(RM) $@
     $(CC) -dynamiclib -install_name @rpath/$@ -o $@ $^
   endef
@@ -84,7 +84,7 @@ ifeq ($(machtype),MacOS)
     $(CXX) -dynamiclib -install_name @rpath/$@ -o $@ $^
   endef
 else
-  define dynamic_library.o
+  define dynamic_library.lo
     $(RM) $@
     $(CC) -shared -o $@ $^
   endef
@@ -244,42 +244,42 @@ endef
 #		@echo "making $@ from $<"
 		$(depend.cc.lso) 
 
-%.d:		%.C
-ifeq ($(link_switch),static)
-		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.lo)" "$(depend.cc.o)"
-else
-		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.lso)" "$(depend.cc.o)"
-endif
+# %.d:		%.C
+# ifeq ($(link_switch),static)
+# 		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.lo)" "$(depend.cc.o)"
+# else
+# 		@./depend.sh $@ "$(IS_IN_LIB)" "$(depend.cc.lso)" "$(depend.cc.o)"
+# endif
 
 %.lso:		%.c
-		$(dynamic_library.c)
+		$(library_compile.c)
 
 %.lo:		%.c
-		$(dynamic_library.c)
+		$(library_compile.c)
 
 %.so:		%.lo
-		$(dynamic_library.o)
-
-%.lo:		%.cc
-		$(dynamic_library.cc)
-
-%.lso:		%.cc
-		$(dynamic_library.cc)
-
-%.lso:		%.c++
-		$(dynamic_library.cc)
-
-%.lso:		%.cpp
-		$(dynamic_library.cc)
-
-%.lso:		%.cxx
-		$(dynamic_library.cc)
-
-%.lso:		%.C
-		$(dynamic_library.cc)
+		$(dynamic_library.lo)
 
 %.so:		%.lso
 		$(dynamic_library.lso)
+
+%.lo:		%.cc
+		$(library_compile.cc)
+
+%.lso:		%.cc
+		$(library_compile.cc)
+
+%.lso:		%.c++
+		$(library_compile.cc)
+
+%.lso:		%.cpp
+		$(library_compile.cc)
+
+%.lso:		%.cxx
+		$(library_compile.cc)
+
+%.lso:		%.C
+		$(library_compile.cc)
 
 # vim:ai sw=2 noexpandtab
 
