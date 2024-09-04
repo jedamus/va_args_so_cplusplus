@@ -1,5 +1,5 @@
 # erzeugt Samstag, 04. Juli 2015 14:04 (C) 2015 von Leander Jedamus
-# modifiziert Mittwoch, 04. September 2024 19:56 von Leander Jedamus
+# modifiziert Mittwoch, 04. September 2024 20:59 von Leander Jedamus
 # modifiziert Montag, 02. September 2024 23:10 von Leander Jedamus
 # modifiziert Sonntag, 01. September 2024 16:58 von Leander Jedamus
 # modifiziert Mittwoch, 15. November 2023 16:33 von Leander Jedamus
@@ -58,37 +58,37 @@ $(RM) $@
 $(strip $(LINK.cc) $(filter %.o,$^) $(LOADLIBES) -o $@ $(LDLIBS))
 endef
 
-define static_link
+define static_library
 $(RM) $@
 $(AR) $(ARFLAGS) $@ $^
 $(RANLIB) $@
 endef
 
-define dynamic_link.c
+define dynamic_library.c
 $(RM) $@
 $(strip $(COMPILE.c) -fPIC $< $(OUTPUT_OPTION))
 endef
 
-define dynamic_link.cc
+define dynamic_library.cc
 $(RM) $@
 $(strip $(COMPILE.cc) -fPIC $< $(OUTPUT_OPTION))
 endef
 
 ifeq ($(machtype),MacOS)
-  define dynamic_link.o
+  define dynamic_library.o
     $(RM) $@
     $(CC) -dynamiclib -install_name @rpath/$@ -o $@ $^
   endef
-  define dynamic_link.lso
+  define dynamic_library.lso
     $(RM) $@
     $(CXX) -dynamiclib -install_name @rpath/$@ -o $@ $^
   endef
 else
-  define dynamic_link.o
+  define dynamic_library.o
     $(RM) $@
     $(CC) -shared -o $@ $^
   endef
-  define dynamic_link.lso
+  define dynamic_library.lso
     $(RM) $@
     $(CXX) -shared -o $@ $^
   endef
@@ -252,34 +252,34 @@ else
 endif
 
 %.lso:		%.c
-		$(dynamic_link.c)
+		$(dynamic_library.c)
 
 %.lo:		%.c
-		$(dynamic_link.c)
+		$(dynamic_library.c)
 
 %.so:		%.lo
-		$(dynamic_link.o)
+		$(dynamic_library.o)
 
 %.lo:		%.cc
-		$(dynamic_link.cc)
+		$(dynamic_library.cc)
 
 %.lso:		%.cc
-		$(dynamic_link.cc)
+		$(dynamic_library.cc)
 
 %.lso:		%.c++
-		$(dynamic_link.cc)
+		$(dynamic_library.cc)
 
 %.lso:		%.cpp
-		$(dynamic_link.cc)
+		$(dynamic_library.cc)
 
 %.lso:		%.cxx
-		$(dynamic_link.cc)
+		$(dynamic_library.cc)
 
 %.lso:		%.C
-		$(dynamic_link.cc)
+		$(dynamic_library.cc)
 
 %.so:		%.lso
-		$(dynamic_link.lso)
+		$(dynamic_library.lso)
 
 # vim:ai sw=2 noexpandtab
 
