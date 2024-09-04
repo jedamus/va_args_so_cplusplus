@@ -1,5 +1,5 @@
 # erzeugt Samstag, 04. Juli 2015 14:04 (C) 2015 von Leander Jedamus
-# modifiziert Mittwoch, 04. September 2024 19:09 von Leander Jedamus
+# modifiziert Mittwoch, 04. September 2024 19:56 von Leander Jedamus
 # modifiziert Montag, 02. September 2024 23:10 von Leander Jedamus
 # modifiziert Sonntag, 01. September 2024 16:58 von Leander Jedamus
 # modifiziert Mittwoch, 15. November 2023 16:33 von Leander Jedamus
@@ -58,7 +58,7 @@ $(RM) $@
 $(strip $(LINK.cc) $(filter %.o,$^) $(LOADLIBES) -o $@ $(LDLIBS))
 endef
 
-define archive
+define static_link
 $(RM) $@
 $(AR) $(ARFLAGS) $@ $^
 $(RANLIB) $@

@@ -404,14 +404,14 @@ $(PROGRAM1):		$(CPPDEPENDS) $(LIB1RARY) $(LIB2RARY) $(MAINOBJS)
 
 $(LIB1RARY):		$(LIB1OBJS)
 ifeq ($(lib1_switch),static)
-			$(archive)
+			$(static_link)
 else
 			$(dynamic_link.lso)
  endif
 
 $(LIB2RARY):		$(LIB2OBJS)
 ifeq ($(lib2_switch),static)
-			$(archive)
+			$(static_link)
 else
 			$(dynamic_link.lso)
 endif
