@@ -139,9 +139,9 @@ ifneq ($(link_switch),static)
     LDFLAGS		+= -Wl,--rpath=$(shell pwd)
   endif
 endif
-
 #LDFLAGS		+= --rpath=$(shell pwd) # for other compilers
 #LDFLAGS		+= --rpath=.
+
 LDLIBS			+= -lm
 # LDLIBS		+= -lefence
 LDLIBS			+= # -lvga
