@@ -51,7 +51,10 @@ SUFFIXES := .out .a .ln .o .c .cc .cpp .c++ .cxx .C .p .pas .f .F .for .f77 .f90
 .DELETE_ON_ERROR:
 
 debug_switch		:= true# false
-link_switch		:= shared# static# shared# static
+
+# set link_switch to shared, if there is at least one shared library:
+link_switch		:= shared# static#
+
 lib1_switch		:= static
 lib2_switch		:= shared
 
