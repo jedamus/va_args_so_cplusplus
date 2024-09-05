@@ -1,6 +1,7 @@
 // This may look like C code, but it is really -*- C++ -*-
 // types.hh
 // erzeugt Mittwoch, 19. Juli 2023 18:38 (C) 2023 von Leander Jedamus
+// modifiziert Donnerstag, 05. September 2024 04:12 von Leander Jedamus
 // modifiziert Montag, 25. September 2023 07:39 von Leander Jedamus
 // modifiziert Dienstag, 19. September 2023 18:31 von Leander Jedamus
 // modifiziert Dienstag, 05. September 2023 08:09 von Leander Jedamus
@@ -12,6 +13,7 @@
 #define TYPES_HH 1
 
 #include <inttypes.h>
+#include <stdbool.h>
 
 typedef unsigned char byte;
 typedef unsigned char uchar;
@@ -38,6 +40,15 @@ typedef int_least32_t      slint;
 
 typedef unsigned short int usint;
 typedef signed short int   ssint;
+
+#if defined __unix__ || defined __APPLE__
+  #define PATH_SEPARATOR ':'
+  #define PATH_DELIMITER '/'
+  #define PATH_DELIMITER2 "/"
+#else
+  #define PATH_SEPARATOR ';'
+  #define PATH_DELIMITER '\\'
+#endif
 
 #endif // TYPES_HH
 
