@@ -1,7 +1,7 @@
 // This may look like C code, but it is really -*- C++ -*-
 // getlocaledir.cc
 // erzeugt Montag, 14. August 2023 08:33 (C) 2023 von Leander Jedamus
-// modifiziert Donnerstag, 05. September 2024 05:30 von Leander Jedamus
+// modifiziert Donnerstag, 05. September 2024 06:12 von Leander Jedamus
 // modifiziert Donnerstag, 07. März 2024 17:04 von Leander Jedamus
 // modifiziert Sonntag, 03. März 2024 13:15 von Leander Jedamus
 // modifiziert Montag, 26. Februar 2024 15:54 von Leander Jedamus
@@ -49,11 +49,13 @@ bool check_file(const char * path, const char * filename) {
 void check_path(const char * path, char * localedir) {
   char * ptr;
 
-  strcpy(localedir,path);
+  strncpy(localedir,path,PATH_MAX);
 
   ptr = (char *) strstr(localedir, PATH_DELIMITER2 "bin");
   // printf("ptr=%s\n", ptr);
+  if( ptr != NULL) {
   sprintf(ptr,"%s", PATH_DELIMITER2 "share" PATH_DELIMITER2);
+  };
 }
 
 char *getlocaledir(CONST char * arg) {
