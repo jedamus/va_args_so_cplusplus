@@ -1,6 +1,7 @@
 /* -*- C -*- */
 /* clrscr.hh */
 /* erzeugt Mittwoch, 30. August 2023 12:02 (C) 2023 von Leander Jedamus */
+// modifiziert Donnerstag, 05. September 2024 03:36 von Leander Jedamus
 // modifiziert Montag, 02. Oktober 2023 07:07 von Leander Jedamus
 // modifiziert Donnerstag, 31. August 2023 11:15 von Leander Jedamus
 /* modifiziert Mittwoch, 30. August 2023 13:39 von Leander Jedamus */
@@ -11,7 +12,7 @@
 #include <stdio.h>
 
 #if defined __unix__ || defined __APPLE__
-  #define clrscr() printf("\033c")
+  #define clrscr() printf("\ec")
 /*  #define clrscr() printf("\e[2J") */
 /*  #define clrscr() system("clear") */
 /*  #include <ncurses.h>
