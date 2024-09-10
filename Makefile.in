@@ -115,7 +115,7 @@ DFLAGS			+= -DINLINE=inline
 DFLAGS			+= -DCONST=const
 #DFLAGS			+= -DCONST
 DFLAGS			+= -DSYSTEM=$(machtype)
-# DFLAGS			+= -DCLRSCR
+DFLAGS			+= -DCLRSCR
 ifeq ($(DEBUG),true)
   DFLAGS		+= -DDEBUG=true
 endif
