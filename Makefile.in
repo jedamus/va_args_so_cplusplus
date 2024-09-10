@@ -444,11 +444,11 @@ $(PRINTFILE):		$(FILES)
 .PHONY:			dummy
 dummy:
 
-project.@HPP@:		project.txt
+project.@HPP@:		project.txt author.txt author_email.txt license.txt maintainer.txt maintainer_email.txt years.txt
 			@echo "creating $@"
 			@./create_project.sh $@
 
-version.@HPP@:		version.txt
+version.@HPP@:		version.txt author.txt
 			@echo "creating $@"
 			@./create_version.sh $@
 
