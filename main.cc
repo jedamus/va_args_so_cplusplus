@@ -1,6 +1,7 @@
 // This may look like C code, but it is really -*- C++ -*-
 // main.cc
 // erzeugt Mittwoch, 19. Juli 2023 18:51 (C) 2023 von Leander Jedamus
+// modifiziert Dienstag, 10. September 2024 09:12 von Leander Jedamus
 // modifiziert Freitag, 23. Februar 2024 10:34 von Leander Jedamus
 // modifiziert Donnerstag, 22. Februar 2024 17:44 von Leander Jedamus
 // modifiziert Montag, 02. Oktober 2023 09:03 von Leander Jedamus
@@ -19,6 +20,7 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <string.h>
 
 #include "project.hh"
 #include "version.hh"
@@ -72,9 +74,17 @@ int main(int argc, char *argv[]) {
   bindtextdomain(PROJECT, localedir);
   textdomain(PROJECT);
 
-  sprintf(buffer, _("%s V%s (C) %s by %s <%s>"), PROJECT, VERSION, YEARS, AUTHOR, EMAIL);
-
+  sprintf(buffer, _("%s V%s (C) %s by %s <%s>"), PROJECT, VERSION, YEARS, AUTHOR, AUTHOR_EMAIL);
   std::cout << buffer << std::endl;
+  if (strlen(MAINTAINER) > 0) {
+    sprintf(buffer, _("maintained by %s <%s>"), MAINTAINER, MAINTAINER_EMAIL);
+    std::cout << buffer << std::endl;
+  };
+  if (strlen(LICENSE) > 0) {
+    sprintf(buffer, _("published under license \"%s\""), LICENSE);
+    std::cout << buffer << std::endl;
+  };
+
 
 #ifdef DEBUG
   std::cout << localedir << std::endl;
