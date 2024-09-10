@@ -206,7 +206,8 @@ FILES			+= create_version.sh
 FILES			+= project.txt
 FILES			+= version.txt
 FILES			+= author.txt author_email.txt license.txt
-FILES			+= maintainer.txt maintainer_email.txt years.txt
+FILES			+= maintainer.txt maintainer_email.txt
+FILES			+= url.txt description.txt years.txt
 
 # Library 1:
 
@@ -444,7 +445,7 @@ $(PRINTFILE):		$(FILES)
 .PHONY:			dummy
 dummy:
 
-project.@HPP@:		project.txt author.txt author_email.txt license.txt maintainer.txt maintainer_email.txt years.txt
+project.@HPP@:		project.txt author.txt author_email.txt license.txt maintainer.txt maintainer_email.txt url.txt description.txt years.txt
 			@echo "creating $@"
 			@./create_project.sh $@
 
