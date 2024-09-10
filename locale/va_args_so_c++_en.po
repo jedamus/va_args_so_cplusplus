@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: va_args_so_c++ 1.0\n"
 "Report-Msgid-Bugs-To: Leander Jedamus <ljedamus@web.de>\n"
-"POT-Creation-Date: 2024-08-16 09:33+0200\n"
+"POT-Creation-Date: 2024-09-10 09:27+0200\n"
 "PO-Revision-Date: 2023-08-15 16:06+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,16 +17,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: main.cc:75
+#: main.cc:77
 #, c-format
 msgid "%s V%s (C) %s by %s <%s>"
 msgstr "%s V%s (C) %s by %s <%s>"
 
-#: main.cc:89
+#: main.cc:80
+#, c-format
+msgid "maintained by %s <%s>"
+msgstr "maintained by %s <%s>"
+
+#: main.cc:84
+#, c-format
+msgid "published under license \"%s\""
+msgstr "published under license \"%s\""
+
+#: main.cc:99
 msgid "Enter a number: "
 msgstr "Enter a number: "
 
-#: main.cc:99
+#: main.cc:109
 msgid "Please press 'q' to end program!"
 msgstr "Please press 'q' to end program!"
 
