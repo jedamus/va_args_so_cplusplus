@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 # erzeugt Freitag, 16. Februar 2024 19:38 (C) 2024 von Leander Jedamus
+# modifiziert Montag, 30. September 2024 23:26 von Leander Jedamus
 # modifiziert Dienstag, 10. September 2024 11:02 von Leander Jedamus
 # modifiziert Freitag, 16. August 2024 09:02 von Leander Jedamus
 # modifiziert Donnerstag, 15. August 2024 16:53 von Leander Jedamus
@@ -41,8 +42,8 @@ for file in $project_filename $author_filename $author_email_filename $license_f
   if [ ! -f $file ]; then
     echo "$file not found."
     exit 1
-  else
-    echo "$file found."
+#  else
+#    echo "$file found."
   fi
 done
 
