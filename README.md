@@ -2,6 +2,8 @@
 
 ![GitHub Downloads (specific asset, all releases)](https://img.shields.io/github/downloads/jedamus/va_args_so_cplusplus/va_args_so_cplusplus?label=Total%20Downloads&style=for-the-badge)
 
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/jedamus/va_args_so_cplusplus/total)
+
 This is a template program in C++ using shared libraries written using Makefiles
 
 ## Getting started
