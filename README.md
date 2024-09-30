@@ -1,6 +1,6 @@
 # va args so c++
 
-![GitHub Downloads (specific asset, all releases)](https://img.shields.io/github/downloads/jedamus/va_args_so_cplusplus/va_args_so_cplusplus?label=Downloads%20va_args_so_c++&style=for-the-badge)
+![GitHub Downloads (specific asset, all releases)](https://img.shields.io/github/downloads/jedamus/va_args_so_cplusplus/va_args_so_c++?label=Downloads%20va_args_so_c%2b%2b&style=for-the-badge)
 
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/jedamus/va_args_so_cplusplus/total?label=Total%20Downloads&style=for-the-badge)
 
