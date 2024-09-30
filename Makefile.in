@@ -64,8 +64,8 @@ PRINTFILE		:= .print
 DATE			:= $(shell date +\"%y%m%d\")
 DATETIME		:= $(shell date +\"%d.%m.%Y\ %H:%M\")
 PROJECT			:= $(shell cat project.txt)
-PROJECT_FILES		:= version.@HPP@ project.@HPP@
 # PROJECT		:= va_args_so_c++
+PROJECT_FILES		:= version.@HPP@ project.@HPP@
 BACKUPDIR		:= $(PROJECT)
 TARFILE			:= $(BACKUPDIR).tar.gz
 ZIPFILE			:= $(BACKUPDIR)_$(DATE).zip
@@ -207,7 +207,7 @@ FILES			+= project.txt
 FILES			+= version.txt
 FILES			+= author.txt author_email.txt license.txt
 FILES			+= maintainer.txt maintainer_email.txt
-FILES			+= url.txt description.txt years.txt
+FILES			+= updated.txt url.txt description.txt years.txt
 
 # Library 1:
 
@@ -222,7 +222,7 @@ FILES			+= $(LIB1CPPFILES2)
 LIB1DEPENDS		+= $(LIB1CPPFILES2:%.@CPP@=%.d)
 FILES			+= $(LIB1CPPFILES2:%.@CPP@=%.@HPP@)
 
-# uncomment fo.olwing 4 lines and add your cpp-files here, which don't have a corresponding header file:
+# uncomment following 4 lines and add your cpp-files here, which don't have a corresponding header file:
 # LIB1CPPFILES3		:= no_header.@CPP@
 # CPPSOURCES		+= $(LIB1CPPFILES3)
 # LIB1DEPENDS		+= $(LIB1CPPFILES3:%.@CPP@=%.d)
@@ -445,11 +445,11 @@ $(PRINTFILE):		$(FILES)
 .PHONY:			dummy
 dummy:
 
-project.@HPP@:		project.txt author.txt author_email.txt license.txt maintainer.txt maintainer_email.txt url.txt description.txt years.txt
+project.@HPP@:		project.txt author.txt author_email.txt license.txt maintainer.txt maintainer_email.txt url.txt description.txt years.txt create_project.sh
 			@echo "creating $@"
 			@./create_project.sh $@
 
-version.@HPP@:		version.txt author.txt
+version.@HPP@:		version.txt author.txt updated.txt create_version.sh
 			@echo "creating $@"
 			@./create_version.sh $@
 
