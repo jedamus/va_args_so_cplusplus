@@ -1,6 +1,7 @@
 // This may look like C code, but it is really -*- C++ -*-
 // main.cc
 // erzeugt Mittwoch, 19. Juli 2023 18:51 (C) 2023 von Leander Jedamus
+// modifiziert Dienstag, 01. Oktober 2024 07:02 von Leander Jedamus
 // modifiziert Dienstag, 10. September 2024 09:12 von Leander Jedamus
 // modifiziert Freitag, 23. Februar 2024 10:34 von Leander Jedamus
 // modifiziert Donnerstag, 22. Februar 2024 17:44 von Leander Jedamus
@@ -86,7 +87,7 @@ int main(int argc, char *argv[]) {
   };
 
 
-#ifdef DEBUG
+#ifndef DEBUG2
   std::cout << localedir << std::endl;
 #endif
 
