@@ -210,6 +210,7 @@ FILES			+= distclean.sh
 FILES			+= zip.sh
 FILES			+= create_project.sh
 FILES			+= create_version.sh
+FILES			+= install_bin.sh install_lib.sh install_locale.sh
 FILES			+= project.txt
 FILES			+= version.txt
 FILES			+= author.txt author_email.txt license.txt
