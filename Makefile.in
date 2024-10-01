@@ -66,6 +66,13 @@ DATETIME		:= $(shell date +\"%d.%m.%Y\ %H:%M\")
 PROJECT			:= $(shell cat project.txt)
 # PROJECT		:= va_args_so_c++
 PROJECT_FILES		:= version.@HPP@ project.@HPP@
+
+PREFIX			:= /usr/local
+BINDIR			:= $(PREFIX)/bin
+LIBDIR			:= $(PREFIX)/lib
+DATADIR			:= $(PREFIX)/share
+LOCALEDIR		:= $(DATADIR)/locale
+
 BACKUPDIR		:= $(PROJECT)
 TARFILE			:= $(BACKUPDIR).tar.gz
 ZIPFILE			:= $(BACKUPDIR)_$(DATE).zip
@@ -115,7 +122,7 @@ DFLAGS			+= -DINLINE=inline
 DFLAGS			+= -DCONST=const
 #DFLAGS			+= -DCONST
 DFLAGS			+= -DSYSTEM=$(machtype)
-DFLAGS			+= -DCLRSCR
+# DFLAGS			+= -DCLRSCR
 ifeq ($(DEBUG),true)
   DFLAGS		+= -DDEBUG=true
 endif
@@ -364,8 +371,15 @@ PROGRAM1		:= $(PROJECT)
 PROGRAMS		:= $(PROGRAM1) $(PROGRAM2)
 
 .PHONY:			all
-all::			$(PROJECT_FILES) $(PROGRAMS)
+all:			$(PROJECT_FILES) $(PROGRAMS)
 			@echo done.
+
+.PHONY:			install
+install:		$(PROJECT_FILES) $(PROGRAMS) $(LIB2RARY)
+			sh ./install_bin.sh $(BINDIR) $(PROGRAM1) $(PROGRAM2)
+			sh ./install_lib.sh $(LIBDIR) $(LIB2RARY)
+			sh ./install_locale.sh $(LOCALEDIR) $(PROJECT).mo
+
 
 .PHONY:			strip
 strip:			$(PROGRAMS)
@@ -386,6 +400,7 @@ debug:
 			@echo "$$""(LIB1OBJS)=$(strip $(LIB1OBJS))"
 			@echo "$$""(LIB2OBJS)=$(strip $(LIB2OBJS))"
 			@echo "$$""(IS_IN_LIB)=$(strip $(IS_IN_LIB))"
+
 
 .PHONY:			debugger
 debugger:		$(PROGRAM1)
