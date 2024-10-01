@@ -6,7 +6,7 @@
 LIBDIR=$1
 shift
 
-install -m 755 $* $LIBDIR
+install -v -m 755 $* $LIBDIR
 
 # vim:ai sw=2
 

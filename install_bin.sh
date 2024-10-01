@@ -6,7 +6,7 @@
 BINDIR=$1
 shift
 
-install -m 755 $* $BINDIR
+install -v -m 755 $* $BINDIR
 
 # vim:ai sw=2
 

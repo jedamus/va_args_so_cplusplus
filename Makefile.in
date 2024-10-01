@@ -375,10 +375,10 @@ all:			$(PROJECT_FILES) $(PROGRAMS)
 			@echo done.
 
 .PHONY:			install
-install:		$(PROJECT_FILES) $(PROGRAMS) $(LIB2RARY)
-			sh ./install_bin.sh $(BINDIR) $(PROGRAM1) $(PROGRAM2)
-			sh ./install_lib.sh $(LIBDIR) $(LIB2RARY)
-			sh ./install_locale.sh $(LOCALEDIR) $(PROJECT).mo
+install:		$(PROJECT_FILES) $(PROGRAMS)
+			@sh ./install_bin.sh $(BINDIR) $(PROGRAM1) $(PROGRAM2)
+			@sh ./install_lib.sh $(LIBDIR) $(LIB2RARY)
+			@sh ./install_locale.sh $(LOCALEDIR) $(PROJECT).mo
 
 
 .PHONY:			strip

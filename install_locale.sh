@@ -7,7 +7,9 @@ LOCALEDIR=$1
 shift
 
 for lang in de en; do
-  install -m 644 locale/$lang/LC_MESSAGES/$1 $LOCALEDIR/$lang/LC_MESSAGES
+  dir=$LOCALEDIR/$lang/LC_MESSAGES
+  mkdir -vp $dir
+  install -v -m 644 locale/$lang/LC_MESSAGES/$1 $dir
 done
 
 
