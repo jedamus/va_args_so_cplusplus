@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # erzeugt Mittwoch, 16. August 2023 12:49 (C) 2023 von Leander Jedamus
-# modifiziert Freitag, 04. Oktober 2024 18:23 von Leander Jedamus
+# modifiziert Freitag, 04. Oktober 2024 18:48 von Leander Jedamus
 # modifiziert Samstag, 24. August 2024 08:47 von Leander Jedamus
 # modifiziert Freitag, 15. Dezember 2023 07:23 von Leander Jedamus
 # modifiziert Dienstag, 07. November 2023 17:57 von Leander Jedamus
@@ -42,7 +42,9 @@ if [ -d $locale ]; then
     mkdir -p $backup/$BACKUPDIR/$locale
     cp -p $locale/*.po* $backup/$BACKUPDIR/$locale
     for lang in $TRANSLATE; do
-      cp -rvp $locale/$lang $backup/$BACKUPDIR/$locale
+      if [ -d $locale/$lang ]; then
+        cp -rvp $locale/$lang $backup/$BACKUPDIR/$locale
+      fi
     done
   fi
 fi
