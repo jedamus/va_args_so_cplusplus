@@ -388,6 +388,7 @@ install:		$(PROJECT_FILES) $(PROGRAMS)
 .PHONY:			bin_dist
 bin_dist:		$(PROJECT_FILES) $(PROGRAMS)
 			@sh ./bin_dist.sh $(PROGRAM1) $(PROJECT) $(SHARED_LIBS)
+#			@sh ./bin_dist.sh $(PROGRAM2) $(PROJECT) $(SHARED_LIBS)
 
 .PHONY:			strip
 strip:			$(PROGRAMS)
