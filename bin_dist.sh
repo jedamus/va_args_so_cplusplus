@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # erzeugt Freitag, 04. Oktober 2024 19:01 (C) 2024 von Leander Jedamus
-# modifiziert Freitag, 04. Oktober 2024 21:26 von Leander Jedamus
+# modifiziert Freitag, 04. Oktober 2024 22:04 von Leander Jedamus
 
 set -e
 
@@ -21,12 +21,13 @@ TARFILE="${PROGRAM}_$(uname -s)_$(uname -m).tar.gz"
 
 dir=$(mktemp -d)
 filename="install.sh"
+filename2="README.txt"
 locale=locale
 
 trap "rm -rf $dir; exit" EXIT
 
 mkdir -p $dir/$PROGRAM
-cp -p $PROGRAM $* $dir/$PROGRAM
+cp -vp $PROGRAM $* $dir/$PROGRAM
 
 if [ -d $locale ]; then
   for lang in $TRANSLATE; do
@@ -38,7 +39,13 @@ if [ -d $locale ]; then
 fi
 
 FILE=$dir/$PROGRAM/$filename
-FILE2=$dir/$PROGRAM/README.txt
+FILE2=$dir/$PROGRAM/$filename2
+
+if [ -z "$*" ]; then
+  libs=""
+else
+  libs="install -v -m 755 $* \$LIBDIR"
+fi
 
 cat <<EOF > $FILE
 #!/usr/bin/env sh
@@ -62,7 +69,7 @@ DATADIR=\$PREFIX/share
 LOCALEDIR=\$DATADIR/\$locale
 
 install -v -m 755 $PROGRAM \$BINDIR
-install -v -m 755 $* \$LIBDIR
+$libs
 
 for lang in $TRANSLATE; do
   dir=\$LOCALEDIR/\$lang/LC_MESSAGES
@@ -74,6 +81,8 @@ done
 
 EOF
 
+chmod +x $FILE
+
 cat <<EOF > $FILE2
 Getting started:
 
@@ -83,7 +92,8 @@ tar xvfz $TARFILE
 cd $PROGRAM
 sudo ./install.sh /usr/local
 EOF
-chmod +x $FILE
+
+chmod 644 $FILE2
 
 echo "creating $TARFILE"
 ( cd $dir; tar cf - $PROGRAM) | gzip -9c > $TARFILE
