@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # erzeugt Freitag, 04. Oktober 2024 19:01 (C) 2024 von Leander Jedamus
-# modifiziert Freitag, 04. Oktober 2024 19:47 von Leander Jedamus
+# modifiziert Freitag, 04. Oktober 2024 20:18 von Leander Jedamus
 
 set -e
 
@@ -15,7 +15,7 @@ export TRANSLATE="${TRANSLATE:-"de en"}"
 PROGRAM=$1
 shift
 
-TARFILE="${PROGRAM}_$(uname -m).tar.gz"
+TARFILE="${PROGRAM}_$(uname -s)_$(uname -m).tar.gz"
 
 dir=$(mktemp -d)
 filename="install.sh"
