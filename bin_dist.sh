@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # erzeugt Freitag, 04. Oktober 2024 19:01 (C) 2024 von Leander Jedamus
-# modifiziert Freitag, 04. Oktober 2024 20:18 von Leander Jedamus
+# modifiziert Freitag, 04. Oktober 2024 21:26 von Leander Jedamus
 
 set -e
 
@@ -13,6 +13,8 @@ fi
 export TRANSLATE="${TRANSLATE:-"de en"}"
 
 PROGRAM=$1
+PROJECT=$2
+shift
 shift
 
 TARFILE="${PROGRAM}_$(uname -s)_$(uname -m).tar.gz"
@@ -36,6 +38,7 @@ if [ -d $locale ]; then
 fi
 
 FILE=$dir/$PROGRAM/$filename
+FILE2=$dir/$PROGRAM/README.txt
 
 cat <<EOF > $FILE
 #!/usr/bin/env sh
@@ -64,13 +67,22 @@ install -v -m 755 $* \$LIBDIR
 for lang in $TRANSLATE; do
   dir=\$LOCALEDIR/\$lang/LC_MESSAGES
   mkdir -vp \$dir
-  install -v -m 644 \$locale/\$lang/LC_MESSAGES/$PROGRAM.mo \$dir
+  install -v -m 644 \$locale/\$lang/LC_MESSAGES/$PROJECT.mo \$dir
 done
 
 # vim:ai sw=2
 
 EOF
 
+cat <<EOF > $FILE2
+Getting started:
+
+To install under /usr/local, do the following:
+
+tar xvfz $TARFILE
+cd $PROGRAM
+sudo ./install.sh /usr/local
+EOF
 chmod +x $FILE
 
 echo "creating $TARFILE"
