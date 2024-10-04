@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # erzeugt Dienstag, 01. Oktober 2024 06:17 (C) 2024 von Leander Jedamus
-# modifiziert Freitag, 04. Oktober 2024 18:21 von Leander Jedamus
+# modifiziert Freitag, 04. Oktober 2024 23:18 von Leander Jedamus
 # modifiziert Dienstag, 01. Oktober 2024 06:26 von Leander Jedamus
 
 set -e
@@ -10,11 +10,12 @@ export TRANSLATE="${TRANSLATE:-"de en"}"
 
 LOCALEDIR=$1
 shift
+MOFILE=$1
 
 for lang in $TRANSLATE; do
   dir=$LOCALEDIR/$lang/LC_MESSAGES
   mkdir -vp $dir
-  install -v -m 644 locale/$lang/LC_MESSAGES/$1 $dir
+  install -v -m 644 locale/$lang/LC_MESSAGES/$MOFILE $dir
 done
 
 
