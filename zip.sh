@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 # erzeugt Donnerstag, 02. November 2023 22:07 (C) 2023 von Leander Jedamus
+# modifiziert Freitag, 04. Oktober 2024 18:19 von Leander Jedamus
 # modifiziert Samstag, 24. August 2024 09:13 von Leander Jedamus
 # modifiziert Freitag, 29. Dezember 2023 12:36 von Leander Jedamus
 # modifiziert Donnerstag, 28. Dezember 2023 07:13 von Leander Jedamus
@@ -21,6 +22,8 @@ if [ -z $2 ]; then
   echo "error: Please provide a backup-dir and the name of the tarfile and after that some files to backup"
   exit 1
 fi
+
+export TRANSLATE="${TRANSLATE:-"de en"}"
 
 locale=locale
 svn=.svn
