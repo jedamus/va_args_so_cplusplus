@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # erzeugt Freitag, 04. Oktober 2024 19:01 (C) 2024 von Leander Jedamus
-# modifiziert Freitag, 04. Oktober 2024 22:04 von Leander Jedamus
+# modifiziert Freitag, 04. Oktober 2024 22:17 von Leander Jedamus
 
 set -e
 
@@ -32,8 +32,8 @@ cp -vp $PROGRAM $* $dir/$PROGRAM
 if [ -d $locale ]; then
   for lang in $TRANSLATE; do
     if [ -d $locale/$lang ]; then
-      mkdir -p $dir/$PROGRAM/$locale/$lang
-      cp -rvp $locale/$lang $dir/$PROGRAM/$locale
+      mkdir -p $dir/$PROGRAM/$locale/$lang/LC_MESSAGES
+      cp -vp $locale/$lang/LC_MESSAGES/$PROJECT.mo $dir/$PROGRAM/$locale/$lang/LC_MESSAGES
     fi
   done
 fi
