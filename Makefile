@@ -1,5 +1,5 @@
 # erzeugt Samstag, 04. Juli 2015 14:04 (C) 2015 von Leander Jedamus
-# modifiziert Montag, 07. Oktober 2024 19:08 von Leander Jedamus
+# modifiziert Montag, 07. Oktober 2024 19:13 von Leander Jedamus
 # modifiziert Sonntag, 01. September 2024 09:12 von Leander Jedamus
 # modifiziert Montag, 12. August 2024 09:42 von Leander Jedamus
 # modifiziert Dienstag, 06. August 2024 15:13 von Leander Jedamus
@@ -240,7 +240,7 @@ FILES			+= $(LIB1CPPFILES2:%.cc=%.hh)
 # FILES			+= $(LIB1CPPFILES3)
 
 CPPDEPENDS		+= $(LIB1DEPENDS)
-LIB1RARYNAME		:= subs_so_c++
+LIB1RARYNAME		:= subs_so_cxx
 LIB1OBJ			:= lib$(LIB1RARYNAME).o
 
 LOADLIBES		:= -l$(LIB1RARYNAME)
@@ -316,7 +316,7 @@ FILES			+= $(LIB2CPPFILES2:%.cc=%.hh)
 # FILES				+= $(LIB2CPPFILES3)
 
 CPPDEPENDS		+= $(LIB2DEPENDS)
-LIB2RARYNAME		:= subs_so_c++2
+LIB2RARYNAME		:= subs_so_cxx2
 LIB2OBJ			:= lib$(LIB2RARYNAME).o
 
 LOADLIBES		+= -l$(LIB2RARYNAME)
