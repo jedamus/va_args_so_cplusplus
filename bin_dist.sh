@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 # erzeugt Freitag, 04. Oktober 2024 19:01 (C) 2024 von Leander Jedamus
+# modifiziert Dienstag, 08. Oktober 2024 06:33 von Leander Jedamus
 # modifiziert Freitag, 04. Oktober 2024 22:17 von Leander Jedamus
 
 set -e
@@ -43,14 +44,17 @@ FILE2=$dir/$PROGRAM/$filename2
 
 if [ -z "$*" ]; then
   libs=""
+  ldconfig=""
 else
   libs="install -v -m 755 $* \$LIBDIR"
+  ldconfig="ldconfig"
 fi
 
 cat <<EOF > $FILE
 #!/usr/bin/env sh
 
 # erzeugt Freitag, 04. Oktober 2024 19:01 (C) 2024 von Leander Jedamus
+# modifiziert Dienstag, 08. Oktober 2024 06:32 von Leander Jedamus
 # modifiziert Freitag, 04. Oktober 2024 19:24 von Leander Jedamus
 
 set -e
@@ -76,6 +80,8 @@ for lang in $TRANSLATE; do
   mkdir -vp \$dir
   install -v -m 644 \$locale/\$lang/LC_MESSAGES/$PROJECT.mo \$dir
 done
+
+$ldconfig
 
 # vim:ai sw=2
 
