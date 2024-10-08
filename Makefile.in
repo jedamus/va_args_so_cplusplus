@@ -70,8 +70,12 @@ PROJECT_FILES		:= version.@HPP@ project.@HPP@
 PREFIX			:= /usr/local
 BINDIR			:= $(PREFIX)/bin
 LIBDIR			:= $(PREFIX)/lib
-DATADIR			:= $(PREFIX)/share
-LOCALEDIR		:= $(DATADIR)/locale
+DATAROOTDIR		:= $(PREFIX)/share
+DATADIR			:= $(DATAROOTDIR)
+MANDIR			:= $(DATAROOTDIR)/man
+INFODIR			:= $(DATAROOTDIR)/info
+DOCDIR			:= $(DATAROOTDIR)/doc/$(PROJECT)
+LOCALEDIR		:= $(DATAROOTDIR)/locale
 
 BACKUPDIR		:= $(PROJECT)
 TARFILE			:= $(BACKUPDIR).tar.gz

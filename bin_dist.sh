@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # erzeugt Freitag, 04. Oktober 2024 19:01 (C) 2024 von Leander Jedamus
-# modifiziert Dienstag, 08. Oktober 2024 06:33 von Leander Jedamus
+# modifiziert Dienstag, 08. Oktober 2024 14:07 von Leander Jedamus
 # modifiziert Freitag, 04. Oktober 2024 22:17 von Leander Jedamus
 
 set -e
@@ -69,7 +69,11 @@ locale=locale
 
 BINDIR=\$PREFIX/bin
 LIBDIR=\$PREFIX/lib
-DATADIR=\$PREFIX/share
+DATAROOTDIR=\$PREFIX/share
+DATADIR=\$DATAROOTDIR
+MANDIR=\$DATAROOTDIR/man
+INFODIR=\$DATAROOTDIR/info
+DOCDIR=\$DATAROOTDIR/doc/$PROJECT
 LOCALEDIR=\$DATADIR/\$locale
 
 install -v -m 755 $PROGRAM \$BINDIR
