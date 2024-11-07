@@ -195,7 +195,7 @@ CSOURCES		:= # put your c source files here \
 			    (will be used e.g. by "make depend")
 CDEPENDS		:= # here you add the .d files make from .c files
 CPPDEPENDS		:= # here you add the .d files make from .@CPP@ files
-IS_IN_LIB		:= # no.olnger needed
+IS_IN_LIB		:= # no longer needed
 SHARED_LIBS		:= # here you add all shared libraries
 CPPSOURCES		:= # put your c++ source files here. File types \
 			    "*.cc,*.cpp,*.c++,*.cxx,*.C" are recognized. \
@@ -222,6 +222,7 @@ FILES			+= version.txt
 FILES			+= author.txt author_email.txt license.txt
 FILES			+= maintainer.txt maintainer_email.txt
 FILES			+= updated.txt url.txt description.txt years.txt
+FILES			+= license.md
 
 # Library 1:
 
